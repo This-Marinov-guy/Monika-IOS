@@ -13,23 +13,33 @@ struct LoginView: View {
     
     var body: some View {
         VStack(spacing: 20) {
-            // Header
+            // Header with animations
             VStack(spacing: 8) {
-                Image(systemName: "lock.shield.fill")
-                    .font(.system(size: 60))
-                    .foregroundColor(.blue)
+                ZStack {
+                    Circle()
+                        .fill(DesignTokens.Colors.primarySubtle)
+                        .frame(width: 80, height: 80)
+                    
+                    Image(systemName: "lock.shield.fill")
+                        .font(.system(size: 40))
+                        .foregroundStyle(DesignTokens.Gradients.primary)
+                }
+                .scaleOnAppear(delay: 0.1)
+                .pulseEffect()
                 
                 Text("Welcome Back")
                     .font(.title)
                     .fontWeight(.bold)
+                    .slideInFromTop(delay: 0.2)
                 
                 Text("Sign in to continue")
                     .font(.subheadline)
                     .foregroundColor(.secondary)
+                    .slideInFromTop(delay: 0.3)
             }
             .padding(.bottom, 20)
             
-            // Email field
+            // Email field with animation
             VStack(alignment: .leading, spacing: 8) {
                 Text("Email")
                     .font(.subheadline)
@@ -48,8 +58,10 @@ struct LoginView: View {
                         focusedField = .password
                     }
             }
+            .slideInFromLeft(delay: 0.4)
+            .shakeEffect(trigger: authService.errorMessage != nil)
             
-            // Password field
+            // Password field with animation
             VStack(alignment: .leading, spacing: 8) {
                 Text("Password")
                     .font(.subheadline)
@@ -68,6 +80,8 @@ struct LoginView: View {
                         }
                     }
             }
+            .slideInFromLeft(delay: 0.5)
+            .shakeEffect(trigger: authService.errorMessage != nil)
             
             // Forgot password
             HStack {

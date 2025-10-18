@@ -15,15 +15,15 @@ public struct CalendarTabView: View {
                     .ignoresSafeArea()
                 
                 VStack(spacing: 0) {
-                    // View mode picker with gradient background
-                    VStack(spacing: 0) {
-                        Picker("View Mode", selection: $viewMode) {
-                            Text("Week").tag(CalendarViewMode.week)
-                            Text("Month").tag(CalendarViewMode.month)
-                        }
-                        .pickerStyle(.segmented)
-                        .padding()
+                // View mode picker with gradient background
+                VStack(spacing: 0) {
+                    Picker("View Mode", selection: $viewMode.animation(AnimationConstants.spring)) {
+                        Text("Week").tag(CalendarViewMode.week)
+                        Text("Month").tag(CalendarViewMode.month)
                     }
+                    .pickerStyle(.segmented)
+                    .padding()
+                }
                     .background(
                         LinearGradient(
                             colors: [DesignTokens.Colors.primarySubtle.opacity(0.3), DesignTokens.Colors.white],
@@ -37,12 +37,21 @@ public struct CalendarTabView: View {
                         VStack(spacing: DesignTokens.Spacing.large) {
                             if viewMode == .week {
                                 WeekView(selectedDate: $selectedDate)
+                                    .transition(.asymmetric(
+                                        insertion: .move(edge: .leading).combined(with: .opacity),
+                                        removal: .move(edge: .trailing).combined(with: .opacity)
+                                    ))
                             } else {
                                 MonthView(selectedDate: $selectedDate)
+                                    .transition(.asymmetric(
+                                        insertion: .move(edge: .trailing).combined(with: .opacity),
+                                        removal: .move(edge: .leading).combined(with: .opacity)
+                                    ))
                             }
                             
                             // Upcoming events section
                             UpcomingEventsSection()
+                                .slideInFromBottom(delay: 0.2)
                         }
                         .padding()
                     }

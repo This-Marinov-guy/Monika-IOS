@@ -107,9 +107,11 @@ struct GiftPersonSection: View {
             Text(personName)
                 .font(DesignTokens.Typography.headline)
                 .foregroundStyle(DesignTokens.Colors.textPrimary)
+                .slideInFromLeft(delay: 0.1)
             
-            ForEach(gifts) { gift in
+            ForEach(Array(gifts.enumerated()), id: \.element.id) { index, gift in
                 GiftCard(gift: gift)
+                    .slideInFromRight(delay: 0.2 + Double(index) * AnimationConstants.staggerDelay)
             }
         }
     }
@@ -125,11 +127,13 @@ struct GiftItem: Identifiable {
 
 struct GiftCard: View {
     let gift: GiftItem
+    @State private var showCelebration = false
+    @State private var iconScale: CGFloat = 1.0
     
     var body: some View {
         PlannerCard {
             HStack(spacing: DesignTokens.Spacing.medium) {
-                // Gift icon
+                // Gift icon with animation
                 ZStack {
                     Circle()
                         .fill(gift.purchased ? Color.green.opacity(0.1) : DesignTokens.Colors.primary.opacity(0.1))
@@ -137,6 +141,7 @@ struct GiftCard: View {
                     
                     Image(systemName: gift.purchased ? "checkmark.circle.fill" : "gift.fill")
                         .foregroundStyle(gift.purchased ? .green : DesignTokens.Colors.primary)
+                        .scaleEffect(iconScale)
                 }
                 
                 // Gift details
@@ -161,6 +166,20 @@ struct GiftCard: View {
                 Image(systemName: "chevron.right")
                     .font(.caption)
                     .foregroundStyle(DesignTokens.Colors.textTertiary)
+            }
+        }
+        .celebrate(trigger: showCelebration)
+        .onAppear {
+            if gift.purchased {
+                // Bounce animation for purchased items
+                withAnimation(AnimationConstants.bouncy) {
+                    iconScale = 1.2
+                }
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
+                    withAnimation(AnimationConstants.bouncy) {
+                        iconScale = 1.0
+                    }
+                }
             }
         }
     }

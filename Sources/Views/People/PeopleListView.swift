@@ -41,17 +41,18 @@ public struct PeopleListView: View {
                                 message: searchText.isEmpty ? "Add people to track their special days" : "Try a different search"
                             )
                             .padding()
-                        } else {
-                            LazyVGrid(columns: [
-                                GridItem(.flexible()),
-                                GridItem(.flexible())
-                            ], spacing: DesignTokens.Spacing.medium) {
-                                ForEach(filteredPeople) { person in
-                                    PersonCard(person: person)
-                                }
+                    } else {
+                        LazyVGrid(columns: [
+                            GridItem(.flexible()),
+                            GridItem(.flexible())
+                        ], spacing: DesignTokens.Spacing.medium) {
+                            ForEach(Array(filteredPeople.enumerated()), id: \.element.id) { index, person in
+                                PersonCard(person: person)
+                                    .scaleOnAppear(delay: Double(index) * AnimationConstants.staggerDelay)
                             }
-                            .padding(.horizontal)
                         }
+                        .padding(.horizontal)
+                    }
                     }
                     .padding(.vertical)
                 }
@@ -80,6 +81,7 @@ public struct PeopleListView: View {
 
 struct PersonCard: View {
     let person: Person
+    @State private var isPulsing = false
     
     private var birthdayText: String? {
         guard let birthday = person.birthday else { return nil }
@@ -91,15 +93,32 @@ struct PersonCard: View {
     var body: some View {
         PlannerCard {
             VStack(spacing: DesignTokens.Spacing.medium) {
-                // Avatar
+                // Avatar with pulse animation
                 Circle()
-                    .fill(DesignTokens.Colors.primary.opacity(0.1))
+                    .fill(
+                        LinearGradient(
+                            colors: [
+                                DesignTokens.Colors.primary.opacity(0.15),
+                                DesignTokens.Colors.primary.opacity(0.05)
+                            ],
+                            startPoint: .topLeading,
+                            endPoint: .bottomTrailing
+                        )
+                    )
                     .frame(width: 60, height: 60)
                     .overlay {
                         Text(String(person.name.prefix(1)))
                             .font(DesignTokens.Typography.title)
                             .fontWeight(.bold)
                             .foregroundStyle(DesignTokens.Colors.primary)
+                    }
+                    .scaleEffect(isPulsing ? 1.05 : 1.0)
+                    .animation(
+                        .easeInOut(duration: 1.5).repeatForever(autoreverses: true),
+                        value: isPulsing
+                    )
+                    .onAppear {
+                        isPulsing = true
                     }
                 
                 VStack(spacing: 4) {

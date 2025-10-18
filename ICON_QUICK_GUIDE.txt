@@ -1,0 +1,59 @@
+🌸 QUICK ICON SETUP - 3 STEPS
+
+Your animated splash screen is ALREADY WORKING! ✅
+Just add the app icon to Xcode:
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+STEP 1: Generate Icon Sizes
+→ Go to: https://appicon.co/
+→ Upload your flower icon image (1024x1024)
+→ Click "Generate" → Download
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+STEP 2: Open Xcode
+→ Run: open MonikaSwiftiOS/MonikaSwiftiOS.xcodeproj
+→ Click: Assets.xcassets
+→ Click: AppIcon
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+STEP 3: Drag Icons
+→ Drag each sized icon into its slot
+→ Press ⌘ + R to run
+→ Done! 🎉
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+WHAT YOU'LL SEE:
+
+1. Home Screen: Your flower icon 🌸
+2. Launch: Animated splash screen
+   • Flower scales up
+   • Rotates 360°
+   • Glowing pulse
+   • "Monika" text appears
+   • Fades to main app
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+ALREADY IMPLEMENTED:
+✅ Splash screen animation
+✅ Green gradient background
+✅ Flower icon drawing
+✅ Smooth transitions
+✅ Auto-dismiss after 2.5s
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+TEST IT NOW (macOS):
+$ cd /Users/vlady/Desktop/monika-swift
+$ swift run
+
+You'll see the beautiful animated splash screen! 🎬
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+File: Sources/Views/SplashScreenView.swift
+

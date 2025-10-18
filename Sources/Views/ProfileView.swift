@@ -17,7 +17,7 @@ public struct ProfileView: View {
                 // User info section with gradient
                 Section {
                     VStack(spacing: DesignTokens.Spacing.medium) {
-                        // Avatar with gradient background
+                        // Avatar with gradient background and pulse
                         ZStack {
                             Circle()
                                 .fill(DesignTokens.Gradients.primary)
@@ -33,6 +33,8 @@ public struct ProfileView: View {
                                 .font(.system(size: 70))
                                 .foregroundColor(.white)
                         }
+                        .pulseEffect()
+                        .scaleOnAppear(delay: 0.2)
                         
                         VStack(spacing: 4) {
                             Text("Email")
@@ -79,7 +81,7 @@ public struct ProfileView: View {
                 
                 // Appearance section
                 Section {
-                    Toggle(isOn: $themeManager.isDarkMode) {
+                    Toggle(isOn: $themeManager.isDarkMode.animation(AnimationConstants.bouncy)) {
                         HStack(spacing: DesignTokens.Spacing.medium) {
                             ZStack {
                                 Circle()
@@ -88,6 +90,8 @@ public struct ProfileView: View {
                                 
                                 Image(systemName: themeManager.isDarkMode ? "moon.fill" : "sun.max.fill")
                                     .foregroundColor(DesignTokens.Colors.primary)
+                                    .rotationEffect(.degrees(themeManager.isDarkMode ? 0 : 180))
+                                    .animation(AnimationConstants.bouncy, value: themeManager.isDarkMode)
                             }
                             Text("Dark Mode")
                                 .foregroundStyle(DesignTokens.Colors.textPrimary)

@@ -8,6 +8,9 @@ struct PrimaryButton: View {
     var isDisabled: Bool = false
     var fullWidth: Bool = true
     
+    @State private var isPressed = false
+    @State private var rotationAngle: Double = 0
+    
     init(
         _ title: String,
         icon: String? = nil,
@@ -25,7 +28,7 @@ struct PrimaryButton: View {
     }
     
     var body: some View {
-        Button(action: action) {
+        Button(action: handleAction) {
             HStack(spacing: DesignTokens.Spacing.xs) {
                 if isLoading {
                     ProgressView()
@@ -35,6 +38,7 @@ struct PrimaryButton: View {
                     if let icon = icon {
                         Image(systemName: icon)
                             .font(.system(size: DesignTokens.IconSize.sm, weight: .semibold))
+                            .rotationEffect(.degrees(rotationAngle))
                     }
                     Text(title)
                         .font(DesignTokens.Typography.labelLarge)
@@ -55,13 +59,45 @@ struct PrimaryButton: View {
             .foregroundColor(.white)
             .cornerRadius(DesignTokens.BorderRadius.button)
             .shadow(
-                color: isDisabled ? .clear : DesignTokens.Colors.primary.opacity(0.2),
-                radius: 16,
+                color: isDisabled ? .clear : DesignTokens.Colors.primary.opacity(isPressed ? 0.1 : 0.2),
+                radius: isPressed ? 8 : 16,
                 x: 0,
-                y: 4
+                y: isPressed ? 2 : 4
             )
+            .scaleEffect(isPressed ? 0.96 : 1.0)
+            .rotationEffect(.degrees(isPressed ? (Double.random(in: -0.5...0.5)) : 0))
         }
         .disabled(isDisabled || isLoading)
+        .simultaneousGesture(
+            DragGesture(minimumDistance: 0)
+                .onChanged { _ in
+                    withAnimation(AnimationConstants.quick) {
+                        isPressed = true
+                    }
+                }
+                .onEnded { _ in
+                    withAnimation(AnimationConstants.bouncy) {
+                        isPressed = false
+                    }
+                }
+        )
+    }
+    
+    private func handleAction() {
+        // Icon spin animation on tap
+        if icon != nil {
+            withAnimation(AnimationConstants.bouncy) {
+                rotationAngle += 360
+            }
+        }
+        
+        #if os(iOS)
+        // Haptic feedback
+        let generator = UIImpactFeedbackGenerator(style: .medium)
+        generator.impactOccurred()
+        #endif
+        
+        action()
     }
 }
 

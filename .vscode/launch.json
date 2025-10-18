@@ -1,0 +1,22 @@
+{
+    "configurations": [
+        {
+            "type": "lldb",
+            "request": "launch",
+            "args": [],
+            "cwd": "${workspaceFolder:monika-swift}",
+            "name": "Debug MonikaSwift",
+            "program": "${workspaceFolder:monika-swift}/.build/debug/MonikaSwift",
+            "preLaunchTask": "swift: Build Debug MonikaSwift"
+        },
+        {
+            "type": "lldb",
+            "request": "launch",
+            "args": [],
+            "cwd": "${workspaceFolder:monika-swift}",
+            "name": "Release MonikaSwift",
+            "program": "${workspaceFolder:monika-swift}/.build/release/MonikaSwift",
+            "preLaunchTask": "swift: Build Release MonikaSwift"
+        }
+    ]
+}
