@@ -128,5 +128,36 @@ class PeopleService: ObservableObject {
     func getPerson(byId id: UUID) -> Person? {
         people.first { $0.id == id }
     }
+    
+    // MARK: - ViewModel-friendly wrappers
+    
+    func fetchPeople() async throws -> [Person] {
+        guard let userId = try? await supabase.auth.session.user.id else {
+            throw NSError(domain: "PeopleService", code: 401, userInfo: [NSLocalizedDescriptionKey: "User not authenticated"])
+        }
+        
+        let response: [Person] = try await supabase
+            .from(tableName)
+            .select()
+            .eq("user_id", value: userId.uuidString)
+            .order("name")
+            .execute()
+            .value
+        
+        return response
+    }
+    
+    func createPerson(name: String, birthday: Date?, notes: String?) async throws -> Person {
+        return try await create(name: name, birthday: birthday, notes: notes)
+    }
+    
+    func deletePerson(id: UUID) async throws {
+        let _: EmptyResponse = try await supabase
+            .from(tableName)
+            .delete()
+            .eq("id", value: id.uuidString)
+            .execute()
+            .value
+    }
 }
 

@@ -2,11 +2,13 @@ import SwiftUI
 
 struct PersonFormSheet: View {
     @Environment(\.dismiss) var dismiss
+    @ObservedObject var viewModel: PeopleViewModel
     
     @State private var name = ""
     @State private var birthday: Date = Date()
     @State private var hasBirthday = false
     @State private var notes = ""
+    @State private var isSaving = false
     
     var body: some View {
         NavigationStack {
@@ -39,10 +41,18 @@ struct PersonFormSheet: View {
                 
                 ToolbarItem(placement: .confirmationAction) {
                     Button("Save") {
-                        // TODO: Save person
-                        dismiss()
+                        isSaving = true
+                        Task {
+                            await viewModel.addPerson(
+                                name: name,
+                                birthday: hasBirthday ? birthday : nil,
+                                notes: notes.isEmpty ? nil : notes
+                            )
+                            isSaving = false
+                            dismiss()
+                        }
                     }
-                    .disabled(name.isEmpty)
+                    .disabled(name.isEmpty || isSaving)
                 }
             }
         }
@@ -50,6 +60,6 @@ struct PersonFormSheet: View {
 }
 
 #Preview {
-    PersonFormSheet()
+    PersonFormSheet(viewModel: PeopleViewModel())
 }
 

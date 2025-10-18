@@ -1,9 +1,9 @@
 import Foundation
 
-struct Person: Identifiable, Codable, Hashable {
-    let id: UUID
-    let userId: UUID
-    var name: String
+public struct Person: Identifiable, Codable, Hashable {
+    public let id: UUID
+    public let userId: UUID
+    public var name: String
     var birthday: Date?
     var avatarUrl: String?
     var notes: String?

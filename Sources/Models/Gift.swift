@@ -1,6 +1,6 @@
 import Foundation
 
-enum GiftPriority: String, Codable, CaseIterable {
+public enum GiftPriority: String, Codable, CaseIterable {
     case low
     case medium
     case high
@@ -34,10 +34,10 @@ enum GiftPriority: String, Codable, CaseIterable {
     }
 }
 
-struct Gift: Identifiable, Codable, Hashable {
-    let id: UUID
-    let userId: UUID
-    var personId: UUID
+public struct Gift: Identifiable, Codable, Hashable {
+    public let id: UUID
+    public let userId: UUID
+    public var personId: UUID
     var eventId: UUID?
     var name: String
     var price: Decimal?

@@ -111,7 +111,7 @@ class EventsService: ObservableObject {
             category: category,
             notes: notes,
             reminderEnabled: reminderEnabled,
-            reminderDaysBefore: reminderDaysBefore,
+            reminderDaysBefore: reminderDaysBefore ?? 1,
             recurring: recurring
         )
         
@@ -182,6 +182,84 @@ class EventsService: ObservableObject {
             isLoading = false
             throw error
         }
+    }
+    
+    // MARK: - ViewModel-friendly wrappers
+    
+    func fetchEvents(startDate: Date, endDate: Date) async throws -> [Event] {
+        guard let userId = try? await supabase.auth.session.user.id else {
+            throw NSError(domain: "EventsService", code: 401, userInfo: [NSLocalizedDescriptionKey: "User not authenticated"])
+        }
+        
+        let formatter = ISO8601DateFormatter()
+        formatter.formatOptions = [.withFullDate]
+        
+        let response: [Event] = try await supabase
+            .from(tableName)
+            .select()
+            .eq("user_id", value: userId.uuidString)
+            .gte("event_date", value: formatter.string(from: startDate))
+            .lte("event_date", value: formatter.string(from: endDate))
+            .order("event_date")
+            .execute()
+            .value
+        
+        return response
+    }
+    
+    func fetchUpcomingEvents(limit: Int) async throws -> [Event] {
+        guard let userId = try? await supabase.auth.session.user.id else {
+            throw NSError(domain: "EventsService", code: 401, userInfo: [NSLocalizedDescriptionKey: "User not authenticated"])
+        }
+        
+        let formatter = ISO8601DateFormatter()
+        formatter.formatOptions = [.withFullDate]
+        let today = formatter.string(from: Date())
+        
+        let response: [Event] = try await supabase
+            .from(tableName)
+            .select()
+            .eq("user_id", value: userId.uuidString)
+            .gte("event_date", value: today)
+            .order("event_date")
+            .limit(limit)
+            .execute()
+            .value
+        
+        return response
+    }
+    
+    func createEvent(
+        title: String,
+        eventDate: Date,
+        eventTime: Date?,
+        personId: UUID?,
+        category: EventCategory,
+        notes: String?,
+        reminderEnabled: Bool,
+        reminderDaysBefore: Int?,
+        recurring: RecurringType
+    ) async throws -> Event {
+        return try await create(
+            title: title,
+            eventDate: eventDate,
+            eventTime: eventTime,
+            personId: personId,
+            category: category,
+            notes: notes,
+            reminderEnabled: reminderEnabled,
+            reminderDaysBefore: reminderDaysBefore ?? 1,
+            recurring: recurring
+        )
+    }
+    
+    func deleteEvent(id: UUID) async throws {
+        let _: EmptyResponse = try await supabase
+            .from(tableName)
+            .delete()
+            .eq("id", value: id.uuidString)
+            .execute()
+            .value
     }
 }
 

@@ -1,10 +1,15 @@
 import SwiftUI
 
 public struct PeopleListView: View {
+    @StateObject private var viewModel = PeopleViewModel()
     @State private var searchText = ""
     @State private var showingPersonForm = false
     
     public init() {}
+    
+    private var filteredPeople: [Person] {
+        viewModel.searchPeople(query: searchText)
+    }
     
     public var body: some View {
         NavigationStack {
@@ -13,29 +18,26 @@ public struct PeopleListView: View {
                     SearchBar(text: $searchText, placeholder: "Search people...")
                         .padding(.horizontal)
                     
-                    LazyVGrid(columns: [
-                        GridItem(.flexible()),
-                        GridItem(.flexible())
-                    ], spacing: DesignTokens.Spacing.medium) {
-                        // Placeholder people
-                        ForEach(0..<6, id: \.self) { index in
-                            PersonCard(
-                                name: "Person \(index + 1)",
-                                birthday: Date(),
-                                upcomingEvent: "Birthday in 10 days"
-                            )
-                        }
-                    }
-                    .padding(.horizontal)
-                    
-                    // Empty state when no people
-                    if false {
+                    if viewModel.isLoading {
+                        ProgressView()
+                            .padding()
+                    } else if filteredPeople.isEmpty {
                         EmptyState(
                             icon: "person.2.fill",
-                            title: "No people yet",
-                            message: "Add people to track their special days"
+                            title: searchText.isEmpty ? "No people yet" : "No results",
+                            message: searchText.isEmpty ? "Add people to track their special days" : "Try a different search"
                         )
                         .padding()
+                    } else {
+                        LazyVGrid(columns: [
+                            GridItem(.flexible()),
+                            GridItem(.flexible())
+                        ], spacing: DesignTokens.Spacing.medium) {
+                            ForEach(filteredPeople) { person in
+                                PersonCard(person: person)
+                            }
+                        }
+                        .padding(.horizontal)
                     }
                 }
                 .padding(.vertical)
@@ -53,16 +55,24 @@ public struct PeopleListView: View {
                 }
             }
             .sheet(isPresented: $showingPersonForm) {
-                PersonFormSheet()
+                PersonFormSheet(viewModel: viewModel)
+            }
+            .task {
+                await viewModel.fetchPeople()
             }
         }
     }
 }
 
 struct PersonCard: View {
-    let name: String
-    let birthday: Date?
-    let upcomingEvent: String?
+    let person: Person
+    
+    private var birthdayText: String? {
+        guard let birthday = person.birthday else { return nil }
+        let formatter = DateFormatter()
+        formatter.dateFormat = "MMM d"
+        return "Birthday: \(formatter.string(from: birthday))"
+    }
     
     var body: some View {
         PlannerCard {
@@ -72,21 +82,21 @@ struct PersonCard: View {
                     .fill(DesignTokens.Colors.primary.opacity(0.1))
                     .frame(width: 60, height: 60)
                     .overlay {
-                        Text(String(name.prefix(1)))
+                        Text(String(person.name.prefix(1)))
                             .font(DesignTokens.Typography.title)
                             .fontWeight(.bold)
                             .foregroundStyle(DesignTokens.Colors.primary)
                     }
                 
                 VStack(spacing: 4) {
-                    Text(name)
+                    Text(person.name)
                         .font(DesignTokens.Typography.body)
                         .fontWeight(.semibold)
                         .foregroundStyle(DesignTokens.Colors.textPrimary)
                         .lineLimit(1)
                     
-                    if let upcomingEvent = upcomingEvent {
-                        Text(upcomingEvent)
+                    if let birthdayText = birthdayText {
+                        Text(birthdayText)
                             .font(DesignTokens.Typography.caption)
                             .foregroundStyle(DesignTokens.Colors.textSecondary)
                             .lineLimit(2)

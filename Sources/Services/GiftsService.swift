@@ -155,5 +155,104 @@ class GiftsService: ObservableObject {
             throw error
         }
     }
+    
+    // MARK: - ViewModel-friendly wrappers
+    
+    func fetchGifts() async throws -> [Gift] {
+        guard let userId = try? await supabase.auth.session.user.id else {
+            throw NSError(domain: "GiftsService", code: 401, userInfo: [NSLocalizedDescriptionKey: "User not authenticated"])
+        }
+        
+        let response: [Gift] = try await supabase
+            .from(tableName)
+            .select()
+            .eq("user_id", value: userId.uuidString)
+            .order("name")
+            .execute()
+            .value
+        
+        return response
+    }
+    
+    func fetchGiftsForPerson(personId: UUID) async throws -> [Gift] {
+        guard let userId = try? await supabase.auth.session.user.id else {
+            throw NSError(domain: "GiftsService", code: 401, userInfo: [NSLocalizedDescriptionKey: "User not authenticated"])
+        }
+        
+        let response: [Gift] = try await supabase
+            .from(tableName)
+            .select()
+            .eq("user_id", value: userId.uuidString)
+            .eq("person_id", value: personId.uuidString)
+            .order("name")
+            .execute()
+            .value
+        
+        return response
+    }
+    
+    func createGift(
+        personId: UUID,
+        eventId: UUID?,
+        name: String,
+        price: Double?,
+        link: String?,
+        purchased: Bool,
+        priority: GiftPriority,
+        notes: String?
+    ) async throws -> Gift {
+        let decimalPrice = price.map { Decimal($0) }
+        return try await create(
+            personId: personId,
+            name: name,
+            eventId: eventId,
+            price: decimalPrice,
+            link: link,
+            priority: priority,
+            notes: notes
+        )
+    }
+    
+    func updateGift(
+        id: UUID,
+        personId: UUID,
+        eventId: UUID?,
+        name: String,
+        price: Double?,
+        link: String?,
+        purchased: Bool,
+        priority: GiftPriority,
+        notes: String?
+    ) async throws -> Gift {
+        guard let userId = try? await supabase.auth.session.user.id else {
+            throw NSError(domain: "GiftsService", code: 401, userInfo: [NSLocalizedDescriptionKey: "User not authenticated"])
+        }
+        
+        let decimalPrice = price.map { Decimal($0) }
+        let updatedGift = Gift(
+            id: id,
+            userId: userId,
+            personId: personId,
+            eventId: eventId,
+            name: name,
+            price: decimalPrice,
+            link: link,
+            purchased: purchased,
+            priority: priority,
+            notes: notes
+        )
+        
+        try await update(updatedGift)
+        return updatedGift
+    }
+    
+    func deleteGift(id: UUID) async throws {
+        let _: EmptyResponse = try await supabase
+            .from(tableName)
+            .delete()
+            .eq("id", value: id.uuidString)
+            .execute()
+            .value
+    }
 }
 

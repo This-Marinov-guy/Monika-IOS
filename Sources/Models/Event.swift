@@ -1,6 +1,6 @@
 import Foundation
 
-enum EventCategory: String, Codable, CaseIterable {
+public enum EventCategory: String, Codable, CaseIterable {
     case birthday
     case anniversary
     case holiday
@@ -28,7 +28,7 @@ enum EventCategory: String, Codable, CaseIterable {
     }
 }
 
-enum RecurringType: String, Codable, CaseIterable {
+public enum RecurringType: String, Codable, CaseIterable {
     case none
     case weekly
     case monthly
@@ -44,10 +44,10 @@ enum RecurringType: String, Codable, CaseIterable {
     }
 }
 
-struct Event: Identifiable, Codable, Hashable {
-    let id: UUID
-    let userId: UUID
-    var title: String
+public struct Event: Identifiable, Codable, Hashable {
+    public let id: UUID
+    public let userId: UUID
+    public var title: String
     var eventDate: Date
     var eventTime: Date?
     var personId: UUID?
