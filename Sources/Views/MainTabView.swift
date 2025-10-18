@@ -36,7 +36,7 @@ public struct MainTabView: View {
         #if os(iOS)
         .tint(DesignTokens.Colors.primary)
         #endif
-        .onChange(of: selectedTab) { oldValue, newValue in
+        .onChange(of: selectedTab) { _ in
             // Haptic feedback on tab change
             #if os(iOS)
             let generator = UIImpactFeedbackGenerator(style: .light)
