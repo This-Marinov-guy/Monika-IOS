@@ -1,6 +1,7 @@
 import SwiftUI
 
 public struct PeopleListView: View {
+    @Environment(\.colorScheme) var colorScheme
     @StateObject private var viewModel = PeopleViewModel()
     @State private var searchText = ""
     @State private var showingPersonForm = false
@@ -14,16 +15,10 @@ public struct PeopleListView: View {
     public var body: some View {
         NavigationStack {
             ZStack {
-                // Gradient background
-                LinearGradient(
-                    colors: [
-                        DesignTokens.Colors.primarySubtle.opacity(0.2),
-                        DesignTokens.Colors.backgroundSecondary,
-                        DesignTokens.Colors.white
-                    ],
-                    startPoint: .topLeading,
-                    endPoint: .bottomTrailing
-                )
+                // Adaptive gradient background
+                (colorScheme == .dark 
+                    ? DesignTokens.Gradients.backgroundDarkPeople
+                    : DesignTokens.Gradients.backgroundLightPeople)
                 .ignoresSafeArea()
                 
                 ScrollView {
@@ -80,6 +75,7 @@ public struct PeopleListView: View {
 }
 
 struct PersonCard: View {
+    @Environment(\.colorScheme) var colorScheme
     let person: Person
     @State private var isPulsing = false
     
@@ -125,13 +121,13 @@ struct PersonCard: View {
                     Text(person.name)
                         .font(DesignTokens.Typography.body)
                         .fontWeight(.semibold)
-                        .foregroundStyle(DesignTokens.Colors.textPrimary)
+                        .foregroundStyle(DesignTokens.Colors.adaptiveTextPrimary(colorScheme))
                         .lineLimit(1)
                     
                     if let birthdayText = birthdayText {
                         Text(birthdayText)
                             .font(DesignTokens.Typography.caption)
-                            .foregroundStyle(DesignTokens.Colors.textSecondary)
+                            .foregroundStyle(DesignTokens.Colors.adaptiveTextSecondary(colorScheme))
                             .lineLimit(2)
                             .multilineTextAlignment(.center)
                     }

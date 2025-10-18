@@ -1,6 +1,7 @@
 import SwiftUI
 
 public struct ProfileView: View {
+    @Environment(\.colorScheme) var colorScheme
     @EnvironmentObject var authService: AuthService
     @EnvironmentObject var themeManager: ThemeManager
     @State private var showingSignOutAlert = false
@@ -9,8 +10,10 @@ public struct ProfileView: View {
     
     public var body: some View {
         ZStack {
-            // Background
-            DesignTokens.Colors.backgroundSecondary
+            // Adaptive background
+            (colorScheme == .dark 
+                ? DesignTokens.Gradients.backgroundDark
+                : DesignTokens.Gradients.backgroundLight)
                 .ignoresSafeArea()
             
             List {
@@ -39,21 +42,22 @@ public struct ProfileView: View {
                         VStack(spacing: 4) {
                             Text("Email")
                                 .font(DesignTokens.Typography.caption)
-                                .foregroundColor(DesignTokens.Colors.textSecondary)
+                                .foregroundColor(DesignTokens.Colors.adaptiveTextSecondary(colorScheme))
                             
                             if let email = authService.currentUser?.email {
                                 Text(email)
                                     .font(DesignTokens.Typography.body)
                                     .fontWeight(.semibold)
-                                    .foregroundStyle(DesignTokens.Colors.textPrimary)
+                                    .foregroundStyle(DesignTokens.Colors.adaptiveTextPrimary(colorScheme))
                             }
                         }
                     }
                     .frame(maxWidth: .infinity)
                     .padding(.vertical, DesignTokens.Spacing.large)
                     .listRowBackground(
-                        DesignTokens.Gradients.subtle
-                            .opacity(0.5)
+                        colorScheme == .dark 
+                            ? DesignTokens.Gradients.dark.opacity(0.3)
+                            : DesignTokens.Gradients.subtle.opacity(0.5)
                     )
                 }
             
@@ -65,18 +69,22 @@ public struct ProfileView: View {
                                 .foregroundColor(DesignTokens.Colors.primary)
                                 .frame(width: 24)
                             Text("User ID")
-                                .foregroundColor(DesignTokens.Colors.textSecondary)
+                                .foregroundColor(DesignTokens.Colors.adaptiveTextSecondary(colorScheme))
                             Spacer()
                             Text(userId.uuidString.prefix(8) + "...")
                                 .font(.caption)
-                                .foregroundColor(DesignTokens.Colors.textTertiary)
+                                .foregroundColor(DesignTokens.Colors.adaptiveTextTertiary(colorScheme))
                         }
                     } header: {
                         Text("Account Details")
                             .foregroundStyle(DesignTokens.Colors.textBrand)
                             .fontWeight(.semibold)
                     }
-                    .listRowBackground(DesignTokens.Colors.white)
+                    .listRowBackground(
+                        colorScheme == .dark 
+                            ? DesignTokens.Colors.surfaceDark
+                            : DesignTokens.Colors.white
+                    )
                 }
                 
                 // Appearance section
@@ -94,7 +102,7 @@ public struct ProfileView: View {
                                     .animation(AnimationConstants.bouncy, value: themeManager.isDarkMode)
                             }
                             Text("Dark Mode")
-                                .foregroundStyle(DesignTokens.Colors.textPrimary)
+                                .foregroundStyle(DesignTokens.Colors.adaptiveTextPrimary(colorScheme))
                         }
                     }
                     .tint(DesignTokens.Colors.primary)
@@ -103,7 +111,11 @@ public struct ProfileView: View {
                         .foregroundStyle(DesignTokens.Colors.textBrand)
                         .fontWeight(.semibold)
                 }
-                .listRowBackground(DesignTokens.Colors.white)
+                .listRowBackground(
+                    colorScheme == .dark 
+                        ? DesignTokens.Colors.surfaceDark
+                        : DesignTokens.Colors.white
+                )
                 
                 // About section
                 Section {
@@ -112,27 +124,31 @@ public struct ProfileView: View {
                             .foregroundColor(DesignTokens.Colors.info)
                             .frame(width: 24)
                         Text("Version")
-                            .foregroundColor(DesignTokens.Colors.textSecondary)
+                            .foregroundColor(DesignTokens.Colors.adaptiveTextSecondary(colorScheme))
                         Spacer()
                         Text("1.0.0")
-                            .foregroundColor(DesignTokens.Colors.textTertiary)
+                            .foregroundColor(DesignTokens.Colors.adaptiveTextTertiary(colorScheme))
                     }
                     HStack {
                         Image(systemName: "app.fill")
                             .foregroundColor(DesignTokens.Colors.primary)
                             .frame(width: 24)
                         Text("App")
-                            .foregroundColor(DesignTokens.Colors.textSecondary)
+                            .foregroundColor(DesignTokens.Colors.adaptiveTextSecondary(colorScheme))
                         Spacer()
                         Text("Monika Swift Planner")
-                            .foregroundColor(DesignTokens.Colors.textTertiary)
+                            .foregroundColor(DesignTokens.Colors.adaptiveTextTertiary(colorScheme))
                     }
                 } header: {
                     Text("About")
                         .foregroundStyle(DesignTokens.Colors.textBrand)
                         .fontWeight(.semibold)
                 }
-                .listRowBackground(DesignTokens.Colors.white)
+                .listRowBackground(
+                    colorScheme == .dark 
+                        ? DesignTokens.Colors.surfaceDark
+                        : DesignTokens.Colors.white
+                )
                 
                 // Actions section
                 Section {
@@ -152,7 +168,11 @@ public struct ProfileView: View {
                         }
                     }
                 }
-                .listRowBackground(DesignTokens.Colors.white)
+                .listRowBackground(
+                    colorScheme == .dark 
+                        ? DesignTokens.Colors.surfaceDark
+                        : DesignTokens.Colors.white
+                )
             }
             .scrollContentBackground(.hidden)
         }

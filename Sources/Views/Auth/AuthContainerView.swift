@@ -1,6 +1,7 @@
 import SwiftUI
 
 struct AuthContainerView: View {
+    @Environment(\.colorScheme) var colorScheme
     @EnvironmentObject var authService: AuthService
     @State private var selectedTab: AuthTab = .login
     
@@ -10,6 +11,13 @@ struct AuthContainerView: View {
     
     var body: some View {
         NavigationStack {
+            ZStack {
+                // Adaptive background gradient
+                (colorScheme == .dark 
+                    ? DesignTokens.Gradients.backgroundDark
+                    : DesignTokens.Gradients.backgroundLight)
+                    .ignoresSafeArea()
+                
             VStack(spacing: 0) {
                 // Tab selector
                 Picker("Auth Type", selection: $selectedTab) {
@@ -30,6 +38,7 @@ struct AuthContainerView: View {
             #if os(iOS)
                 .tabViewStyle(.page(indexDisplayMode: .never))
             #endif
+            }
             }
             .navigationTitle("Monika Swift")
         #if os(iOS)

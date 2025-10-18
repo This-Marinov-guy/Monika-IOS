@@ -1,1 +1,6 @@
-{}
+{
+  "swift.linting.enabled": false,
+  // Or be more selective:
+  "swift.diagnosticsCollection": "none",
+  "swift.buildOnSave": false
+}

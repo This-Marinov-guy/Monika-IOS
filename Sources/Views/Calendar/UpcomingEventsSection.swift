@@ -1,12 +1,14 @@
 import SwiftUI
 
 struct UpcomingEventsSection: View {
+    @Environment(\.colorScheme) var colorScheme
+    
     var body: some View {
         VStack(alignment: .leading, spacing: DesignTokens.Spacing.medium) {
             HStack {
                 Text("Upcoming Events")
                     .font(DesignTokens.Typography.headline)
-                    .foregroundStyle(DesignTokens.Colors.textPrimary)
+                    .foregroundStyle(DesignTokens.Colors.adaptiveTextPrimary(colorScheme))
                 
                 Spacer()
                 
@@ -47,6 +49,7 @@ struct UpcomingEventsSection: View {
 }
 
 struct EventRow: View {
+    @Environment(\.colorScheme) var colorScheme
     let title: String
     let date: Date
     let category: String
@@ -71,11 +74,11 @@ struct EventRow: View {
                     Text(dateText.components(separatedBy: " ")[1])
                         .font(DesignTokens.Typography.title)
                         .fontWeight(.bold)
-                        .foregroundStyle(isToday ? DesignTokens.Colors.primary : DesignTokens.Colors.textPrimary)
+                        .foregroundStyle(isToday ? DesignTokens.Colors.primary : DesignTokens.Colors.adaptiveTextPrimary(colorScheme))
                     
                     Text(dateText.components(separatedBy: " ")[0].uppercased())
                         .font(DesignTokens.Typography.caption)
-                        .foregroundStyle(DesignTokens.Colors.textSecondary)
+                        .foregroundStyle(DesignTokens.Colors.adaptiveTextSecondary(colorScheme))
                 }
                 .frame(width: 50)
                 
@@ -84,7 +87,7 @@ struct EventRow: View {
                     Text(title)
                         .font(DesignTokens.Typography.body)
                         .fontWeight(.semibold)
-                        .foregroundStyle(DesignTokens.Colors.textPrimary)
+                        .foregroundStyle(DesignTokens.Colors.adaptiveTextPrimary(colorScheme))
                     
                     HStack(spacing: DesignTokens.Spacing.small) {
                         Label(category, systemImage: "tag.fill")
@@ -94,14 +97,14 @@ struct EventRow: View {
                         }
                     }
                     .font(DesignTokens.Typography.caption)
-                    .foregroundStyle(DesignTokens.Colors.textSecondary)
+                    .foregroundStyle(DesignTokens.Colors.adaptiveTextSecondary(colorScheme))
                 }
                 
                 Spacer()
                 
                 Image(systemName: "chevron.right")
                     .font(.caption)
-                    .foregroundStyle(DesignTokens.Colors.textTertiary)
+                    .foregroundStyle(DesignTokens.Colors.adaptiveTextTertiary(colorScheme))
             }
         }
     }

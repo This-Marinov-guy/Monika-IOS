@@ -1,6 +1,7 @@
 import SwiftUI
 
 public struct CalendarTabView: View {
+    @Environment(\.colorScheme) var colorScheme
     @State private var selectedDate = Date()
     @State private var viewMode: CalendarViewMode = .month
     @State private var showingEventForm = false
@@ -10,12 +11,14 @@ public struct CalendarTabView: View {
     public var body: some View {
         NavigationStack {
             ZStack {
-                // Background gradient
-                DesignTokens.Colors.backgroundSecondary
+                // Adaptive background gradient
+                (colorScheme == .dark 
+                    ? DesignTokens.Gradients.backgroundDarkCalendar
+                    : DesignTokens.Gradients.backgroundLightCalendar)
                     .ignoresSafeArea()
                 
                 VStack(spacing: 0) {
-                // View mode picker with gradient background
+                // View mode picker with adaptive gradient background
                 VStack(spacing: 0) {
                     Picker("View Mode", selection: $viewMode.animation(AnimationConstants.spring)) {
                         Text("Week").tag(CalendarViewMode.week)
@@ -26,7 +29,9 @@ public struct CalendarTabView: View {
                 }
                     .background(
                         LinearGradient(
-                            colors: [DesignTokens.Colors.primarySubtle.opacity(0.3), DesignTokens.Colors.white],
+                            colors: colorScheme == .dark 
+                                ? [DesignTokens.Colors.primaryDark.opacity(0.3), DesignTokens.Colors.backgroundDarkSecondary]
+                                : [DesignTokens.Colors.primarySubtle.opacity(0.3), DesignTokens.Colors.white],
                             startPoint: .top,
                             endPoint: .bottom
                         )

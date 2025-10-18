@@ -1,6 +1,7 @@
 import SwiftUI
 
 struct MonthView: View {
+    @Environment(\.colorScheme) var colorScheme
     @Binding var selectedDate: Date
     
     private var monthName: String {
@@ -30,14 +31,14 @@ struct MonthView: View {
                         selectedDate = Calendar.current.date(byAdding: .month, value: -1, to: selectedDate) ?? selectedDate
                     } label: {
                         Image(systemName: "chevron.left")
-                            .foregroundStyle(DesignTokens.Colors.textSecondary)
+                            .foregroundStyle(DesignTokens.Colors.adaptiveTextSecondary(colorScheme))
                     }
                     
                     Spacer()
                     
                     Text(monthName)
                         .font(DesignTokens.Typography.headline)
-                        .foregroundStyle(DesignTokens.Colors.textPrimary)
+                        .foregroundStyle(DesignTokens.Colors.adaptiveTextPrimary(colorScheme))
                     
                     Spacer()
                     
@@ -45,7 +46,7 @@ struct MonthView: View {
                         selectedDate = Calendar.current.date(byAdding: .month, value: 1, to: selectedDate) ?? selectedDate
                     } label: {
                         Image(systemName: "chevron.right")
-                            .foregroundStyle(DesignTokens.Colors.textSecondary)
+                            .foregroundStyle(DesignTokens.Colors.adaptiveTextSecondary(colorScheme))
                     }
                 }
                 
@@ -54,7 +55,7 @@ struct MonthView: View {
                     ForEach(["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"], id: \.self) { day in
                         Text(day)
                             .font(DesignTokens.Typography.caption)
-                            .foregroundStyle(DesignTokens.Colors.textSecondary)
+                            .foregroundStyle(DesignTokens.Colors.adaptiveTextSecondary(colorScheme))
                             .frame(maxWidth: .infinity)
                     }
                 }
@@ -79,6 +80,7 @@ struct MonthView: View {
 }
 
 struct DateCell: View {
+    @Environment(\.colorScheme) var colorScheme
     let date: Date
     let isSelected: Bool
     
@@ -106,7 +108,7 @@ struct DateCell: View {
                 Text(dayNumber)
                     .font(DesignTokens.Typography.body)
                     .fontWeight(isSelected || isToday ? .bold : .regular)
-                    .foregroundStyle(isSelected ? .white : DesignTokens.Colors.textPrimary)
+                    .foregroundStyle(isSelected ? .white : DesignTokens.Colors.adaptiveTextPrimary(colorScheme))
             }
             .frame(width: 32, height: 32)
             

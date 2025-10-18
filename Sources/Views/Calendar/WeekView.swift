@@ -1,6 +1,7 @@
 import SwiftUI
 
 struct WeekView: View {
+    @Environment(\.colorScheme) var colorScheme
     @Binding var selectedDate: Date
     
     private var weekDays: [Date] {
@@ -18,14 +19,14 @@ struct WeekView: View {
                         selectedDate = Calendar.current.date(byAdding: .weekOfYear, value: -1, to: selectedDate) ?? selectedDate
                     } label: {
                         Image(systemName: "chevron.left")
-                            .foregroundStyle(DesignTokens.Colors.textSecondary)
+                            .foregroundStyle(DesignTokens.Colors.adaptiveTextSecondary(colorScheme))
                     }
                     
                     Spacer()
                     
                     Text(weekRangeText)
                         .font(DesignTokens.Typography.headline)
-                        .foregroundStyle(DesignTokens.Colors.textPrimary)
+                        .foregroundStyle(DesignTokens.Colors.adaptiveTextPrimary(colorScheme))
                     
                     Spacer()
                     
@@ -33,7 +34,7 @@ struct WeekView: View {
                         selectedDate = Calendar.current.date(byAdding: .weekOfYear, value: 1, to: selectedDate) ?? selectedDate
                     } label: {
                         Image(systemName: "chevron.right")
-                            .foregroundStyle(DesignTokens.Colors.textSecondary)
+                            .foregroundStyle(DesignTokens.Colors.adaptiveTextSecondary(colorScheme))
                     }
                 }
                 
@@ -63,6 +64,7 @@ struct WeekView: View {
 }
 
 struct DayColumn: View {
+    @Environment(\.colorScheme) var colorScheme
     let date: Date
     let isSelected: Bool
     
@@ -86,7 +88,7 @@ struct DayColumn: View {
         VStack(spacing: DesignTokens.Spacing.small) {
             Text(dayName)
                 .font(DesignTokens.Typography.caption)
-                .foregroundStyle(DesignTokens.Colors.textSecondary)
+                .foregroundStyle(DesignTokens.Colors.adaptiveTextSecondary(colorScheme))
             
             ZStack {
                 Circle()
@@ -96,7 +98,7 @@ struct DayColumn: View {
                 Text(dayNumber)
                     .font(DesignTokens.Typography.body)
                     .fontWeight(isSelected || isToday ? .bold : .regular)
-                    .foregroundStyle(isSelected ? .white : DesignTokens.Colors.textPrimary)
+                    .foregroundStyle(isSelected ? .white : DesignTokens.Colors.adaptiveTextPrimary(colorScheme))
             }
             
             // Event indicators (placeholder dots)

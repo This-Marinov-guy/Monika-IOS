@@ -39,18 +39,23 @@ enum DesignTokens {
         static let info = Color(hex: "3B82F6")
         static let infoLight = Color(hex: "DBEAFE")
         
-        // Background
-        static let background = Color.white
+        // Background - Adaptive for Light/Dark Mode
+        static let background = Color(hex: "FFFFFF")
         static let backgroundSecondary = Color(hex: "F8FAFC")
         static let backgroundTertiary = Color(hex: "F1F5F9")
         static let backgroundDark = Color(hex: "0F172A")
         static let backgroundDarkSecondary = Color(hex: "1E293B")
+        static let backgroundDarkTertiary = Color(hex: "334155")
         static let surface = Color.white
+        static let surfaceDark = Color(hex: "1E293B")
         
-        // Text
+        // Text - Adaptive for Light/Dark Mode
         static let textPrimary = Color(hex: "0F172A")
+        static let textPrimaryDark = Color(hex: "F8FAFC")
         static let textSecondary = Color(hex: "475569")
+        static let textSecondaryDark = Color(hex: "CBD5E1")
         static let textTertiary = Color(hex: "94A3B8")
+        static let textTertiaryDark = Color(hex: "94A3B8")
         static let textInverse = Color.white
         static let textBrand = Color(hex: "6366F1")
         static let textAccent = Color(hex: "EC4899")
@@ -86,6 +91,88 @@ enum DesignTokens {
             colors: [Color(hex: "6366F1"), Color(hex: "EC4899")],
             startPoint: .top,
             endPoint: .bottom
+        )
+        
+        // Adaptive background gradients for light mode
+        static let backgroundLight = LinearGradient(
+            colors: [
+                Color(hex: "E0E7FF").opacity(0.3),
+                Color(hex: "F8FAFC"),
+                Color.white
+            ],
+            startPoint: .topLeading,
+            endPoint: .bottomTrailing
+        )
+        
+        static let backgroundLightCalendar = LinearGradient(
+            colors: [
+                Color(hex: "E0E7FF").opacity(0.4),
+                Color(hex: "F8FAFC"),
+                Color.white
+            ],
+            startPoint: .top,
+            endPoint: .bottom
+        )
+        
+        static let backgroundLightPeople = LinearGradient(
+            colors: [
+                Color(hex: "E0E7FF").opacity(0.3),
+                Color(hex: "F8FAFC"),
+                Color.white
+            ],
+            startPoint: .topLeading,
+            endPoint: .bottomTrailing
+        )
+        
+        static let backgroundLightGifts = LinearGradient(
+            colors: [
+                Color(hex: "FCE7F3").opacity(0.3),
+                Color(hex: "F8FAFC"),
+                Color.white
+            ],
+            startPoint: .topTrailing,
+            endPoint: .bottomLeading
+        )
+        
+        // Adaptive background gradients for dark mode
+        static let backgroundDark = LinearGradient(
+            colors: [
+                Color(hex: "4F46E5").opacity(0.15),
+                Color(hex: "1E293B"),
+                Color(hex: "0F172A")
+            ],
+            startPoint: .topLeading,
+            endPoint: .bottomTrailing
+        )
+        
+        static let backgroundDarkCalendar = LinearGradient(
+            colors: [
+                Color(hex: "4F46E5").opacity(0.2),
+                Color(hex: "1E293B"),
+                Color(hex: "0F172A")
+            ],
+            startPoint: .top,
+            endPoint: .bottom
+        )
+        
+        static let backgroundDarkPeople = LinearGradient(
+            colors: [
+                Color(hex: "4F46E5").opacity(0.15),
+                Color(hex: "1E293B"),
+                Color(hex: "0F172A")
+            ],
+            startPoint: .topLeading,
+            endPoint: .bottomTrailing
+        )
+        
+        static let backgroundDarkGifts = LinearGradient(
+            colors: [
+                Color(hex: "DB2777").opacity(0.15),
+                Color(hex: "1E293B"),
+                Color(hex: "0F172A")
+            ],
+            startPoint: .topTrailing,
+            endPoint: .bottomLeading
         )
     }
     
@@ -342,6 +429,83 @@ extension View {
     func gradientForeground() -> some View {
         self.overlay(DesignTokens.Gradients.primary)
             .mask(self)
+    }
+    
+    /// Adaptive background that changes with color scheme
+    func adaptiveBackground(_ colorScheme: ColorScheme) -> some View {
+        self.background(
+            colorScheme == .dark 
+                ? DesignTokens.Gradients.backgroundDark 
+                : DesignTokens.Gradients.backgroundLight
+        )
+    }
+    
+    /// Calendar-specific adaptive background
+    func calendarBackground(_ colorScheme: ColorScheme) -> some View {
+        self.background(
+            colorScheme == .dark 
+                ? DesignTokens.Gradients.backgroundDarkCalendar
+                : DesignTokens.Gradients.backgroundLightCalendar
+        )
+    }
+    
+    /// People-specific adaptive background
+    func peopleBackground(_ colorScheme: ColorScheme) -> some View {
+        self.background(
+            colorScheme == .dark 
+                ? DesignTokens.Gradients.backgroundDarkPeople
+                : DesignTokens.Gradients.backgroundLightPeople
+        )
+    }
+    
+    /// Gifts-specific adaptive background
+    func giftsBackground(_ colorScheme: ColorScheme) -> some View {
+        self.background(
+            colorScheme == .dark 
+                ? DesignTokens.Gradients.backgroundDarkGifts
+                : DesignTokens.Gradients.backgroundLightGifts
+        )
+    }
+    
+    /// Adaptive card background
+    func adaptiveCardStyle(_ colorScheme: ColorScheme) -> some View {
+        self
+            .background(colorScheme == .dark ? DesignTokens.Colors.surfaceDark : DesignTokens.Colors.surface)
+            .cornerRadius(DesignTokens.BorderRadius.card)
+            .shadow(
+                color: (colorScheme == .dark ? DesignTokens.Colors.primary.opacity(0.3) : DesignTokens.Colors.primary.opacity(DesignTokens.Shadow.card.opacity)),
+                radius: DesignTokens.Shadow.card.radius,
+                x: DesignTokens.Shadow.card.x,
+                y: DesignTokens.Shadow.card.y
+            )
+    }
+}
+
+// MARK: - Adaptive Color Helpers
+extension DesignTokens.Colors {
+    /// Returns adaptive text primary color based on color scheme
+    static func adaptiveTextPrimary(_ colorScheme: ColorScheme) -> Color {
+        colorScheme == .dark ? textPrimaryDark : textPrimary
+    }
+    
+    /// Returns adaptive text secondary color based on color scheme
+    static func adaptiveTextSecondary(_ colorScheme: ColorScheme) -> Color {
+        colorScheme == .dark ? textSecondaryDark : textSecondary
+    }
+    
+    /// Returns adaptive text tertiary color based on color scheme
+    static func adaptiveTextTertiary(_ colorScheme: ColorScheme) -> Color {
+        colorScheme == .dark ? textTertiaryDark : textTertiary
+    }
+    
+    /// Returns adaptive surface color based on color scheme
+    static func adaptiveSurface(_ colorScheme: ColorScheme) -> Color {
+        colorScheme == .dark ? surfaceDark : surface
+    }
+    
+    /// Returns adaptive background color based on color scheme
+    static func adaptiveBackground(_ colorScheme: ColorScheme) -> Color {
+        colorScheme == .dark ? backgroundDark : background
     }
 }
 

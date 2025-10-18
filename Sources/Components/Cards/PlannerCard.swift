@@ -1,6 +1,7 @@
 import SwiftUI
 
 struct PlannerCard<Content: View>: View {
+    @Environment(\.colorScheme) var colorScheme
     let content: Content
     var padding: CGFloat = DesignTokens.Spacing.md
     var elevated: Bool = false
@@ -23,7 +24,11 @@ struct PlannerCard<Content: View>: View {
     var body: some View {
         content
             .padding(padding)
-            .background(DesignTokens.Colors.white)
+            .background(
+                colorScheme == .dark 
+                    ? DesignTokens.Colors.surfaceDark
+                    : DesignTokens.Colors.white
+            )
             .cornerRadius(DesignTokens.BorderRadius.card)
             .shadow(
                 color: DesignTokens.Colors.primary.opacity(shadowOpacity),

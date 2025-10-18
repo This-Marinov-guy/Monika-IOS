@@ -1,6 +1,7 @@
 import SwiftUI
 
 public struct GiftsListView: View {
+    @Environment(\.colorScheme) var colorScheme
     @State private var searchText = ""
     @State private var showingGiftForm = false
     @State private var filterPurchased: FilterOption = .all
@@ -16,20 +17,14 @@ public struct GiftsListView: View {
     public var body: some View {
         NavigationStack {
             ZStack {
-                // Gradient background
-                LinearGradient(
-                    colors: [
-                        DesignTokens.Colors.accentSubtle.opacity(0.2),
-                        DesignTokens.Colors.backgroundSecondary,
-                        DesignTokens.Colors.white
-                    ],
-                    startPoint: .topTrailing,
-                    endPoint: .bottomLeading
-                )
+                // Adaptive gradient background
+                (colorScheme == .dark 
+                    ? DesignTokens.Gradients.backgroundDarkGifts
+                    : DesignTokens.Gradients.backgroundLightGifts)
                 .ignoresSafeArea()
                 
                 VStack(spacing: 0) {
-                    // Filter picker with background
+                    // Filter picker with adaptive background
                     VStack(spacing: 0) {
                         Picker("Filter", selection: $filterPurchased) {
                             ForEach(FilterOption.allCases, id: \.self) { option in
@@ -41,7 +36,9 @@ public struct GiftsListView: View {
                     }
                     .background(
                         LinearGradient(
-                            colors: [DesignTokens.Colors.accentSubtle.opacity(0.3), DesignTokens.Colors.white],
+                            colors: colorScheme == .dark 
+                                ? [DesignTokens.Colors.accentDark.opacity(0.3), DesignTokens.Colors.backgroundDarkSecondary]
+                                : [DesignTokens.Colors.accentSubtle.opacity(0.3), DesignTokens.Colors.white],
                             startPoint: .top,
                             endPoint: .bottom
                         )
@@ -99,6 +96,7 @@ public struct GiftsListView: View {
 }
 
 struct GiftPersonSection: View {
+    @Environment(\.colorScheme) var colorScheme
     let personName: String
     let gifts: [GiftItem]
     
@@ -106,7 +104,7 @@ struct GiftPersonSection: View {
         VStack(alignment: .leading, spacing: DesignTokens.Spacing.small) {
             Text(personName)
                 .font(DesignTokens.Typography.headline)
-                .foregroundStyle(DesignTokens.Colors.textPrimary)
+                .foregroundStyle(DesignTokens.Colors.adaptiveTextPrimary(colorScheme))
                 .slideInFromLeft(delay: 0.1)
             
             ForEach(Array(gifts.enumerated()), id: \.element.id) { index, gift in
@@ -126,6 +124,7 @@ struct GiftItem: Identifiable {
 }
 
 struct GiftCard: View {
+    @Environment(\.colorScheme) var colorScheme
     let gift: GiftItem
     @State private var showCelebration = false
     @State private var iconScale: CGFloat = 1.0
@@ -149,13 +148,13 @@ struct GiftCard: View {
                     Text(gift.name)
                         .font(DesignTokens.Typography.body)
                         .fontWeight(.semibold)
-                        .foregroundStyle(DesignTokens.Colors.textPrimary)
+                        .foregroundStyle(DesignTokens.Colors.adaptiveTextPrimary(colorScheme))
                         .strikethrough(gift.purchased)
                     
                     HStack(spacing: DesignTokens.Spacing.small) {
                         Text("$\(String(format: "%.2f", gift.price))")
                             .font(DesignTokens.Typography.subheadline)
-                            .foregroundStyle(DesignTokens.Colors.textSecondary)
+                            .foregroundStyle(DesignTokens.Colors.adaptiveTextSecondary(colorScheme))
                         
                         PriorityBadge(priority: gift.priority)
                     }
@@ -165,7 +164,7 @@ struct GiftCard: View {
                 
                 Image(systemName: "chevron.right")
                     .font(.caption)
-                    .foregroundStyle(DesignTokens.Colors.textTertiary)
+                    .foregroundStyle(DesignTokens.Colors.adaptiveTextTertiary(colorScheme))
             }
         }
         .celebrate(trigger: showCelebration)
