@@ -1,156 +1,347 @@
 import SwiftUI
 
 enum DesignTokens {
-    // MARK: - Colors
+    // MARK: - Colors (Monika Custom Design System)
     enum Colors {
-        static let primary = Color.appPrimary
-        static let secondary = Color.gray
-        static let background = Color.adaptiveBackground
-        static let surface = Color.adaptiveSurface
-        static let textPrimary = Color.primary
-        static let textSecondary = Color.secondary
-        static let textTertiary = Color.gray.opacity(0.6)
-        static let error = Color.red
-        static let success = Color.green
-        static let warning = Color.orange
-    }
-    
-    // MARK: - Spacing (8pt grid system)
-    enum Spacing {
-        static let xxs: CGFloat = 4
-        static let xs: CGFloat = 8
-        static let sm: CGFloat = 12
-        static let md: CGFloat = 16
-        static let lg: CGFloat = 24
-        static let xl: CGFloat = 32
-        static let xxl: CGFloat = 48
-        static let xxxl: CGFloat = 64
+        // Primary Brand (Indigo)
+        static let primary = Color(hex: "6366F1")
+        static let primaryDark = Color(hex: "4F46E5")
+        static let primaryLight = Color(hex: "818CF8")
+        static let primaryGlow = Color(hex: "A5B4FC")
+        static let primarySubtle = Color(hex: "E0E7FF")
         
-        // Convenience aliases
-        static let small = xs
-        static let medium = md
-        static let large = lg
+        // Secondary Accent (Pink)
+        static let accent = Color(hex: "EC4899")
+        static let accentDark = Color(hex: "DB2777")
+        static let accentLight = Color(hex: "F472B6")
+        static let accentSubtle = Color(hex: "FCE7F3")
+        
+        // Neutral Slate
+        static let black = Color(hex: "0F172A")
+        static let slate900 = Color(hex: "1E293B")
+        static let slate800 = Color(hex: "334155")
+        static let slate700 = Color(hex: "475569")
+        static let slate600 = Color(hex: "64748B")
+        static let slate500 = Color(hex: "94A3B8")
+        static let slate400 = Color(hex: "CBD5E1")
+        static let slate300 = Color(hex: "E2E8F0")
+        static let slate200 = Color(hex: "F1F5F9")
+        static let slate100 = Color(hex: "F8FAFC")
+        static let white = Color.white
+        
+        // Semantic
+        static let success = Color(hex: "10B981")
+        static let successLight = Color(hex: "D1FAE5")
+        static let warning = Color(hex: "F59E0B")
+        static let warningLight = Color(hex: "FEF3C7")
+        static let error = Color(hex: "EF4444")
+        static let errorLight = Color(hex: "FEE2E2")
+        static let info = Color(hex: "3B82F6")
+        static let infoLight = Color(hex: "DBEAFE")
+        
+        // Background
+        static let background = Color.white
+        static let backgroundSecondary = Color(hex: "F8FAFC")
+        static let backgroundTertiary = Color(hex: "F1F5F9")
+        static let backgroundDark = Color(hex: "0F172A")
+        static let backgroundDarkSecondary = Color(hex: "1E293B")
+        static let surface = Color.white
+        
+        // Text
+        static let textPrimary = Color(hex: "0F172A")
+        static let textSecondary = Color(hex: "475569")
+        static let textTertiary = Color(hex: "94A3B8")
+        static let textInverse = Color.white
+        static let textBrand = Color(hex: "6366F1")
+        static let textAccent = Color(hex: "EC4899")
     }
     
-    // MARK: - Border Radius
-    enum BorderRadius {
+    // MARK: - Gradients
+    enum Gradients {
+        static let primary = LinearGradient(
+            colors: [Color(hex: "6366F1"), Color(hex: "EC4899")],
+            startPoint: .leading,
+            endPoint: .trailing
+        )
+        
+        static let secondary = LinearGradient(
+            colors: [Color(hex: "818CF8"), Color(hex: "F472B6")],
+            startPoint: .leading,
+            endPoint: .trailing
+        )
+        
+        static let dark = LinearGradient(
+            colors: [Color(hex: "4F46E5"), Color(hex: "DB2777")],
+            startPoint: .leading,
+            endPoint: .trailing
+        )
+        
+        static let subtle = LinearGradient(
+            colors: [Color(hex: "E0E7FF"), Color(hex: "FCE7F3")],
+            startPoint: .topLeading,
+            endPoint: .bottomTrailing
+        )
+        
+        static let vertical = LinearGradient(
+            colors: [Color(hex: "6366F1"), Color(hex: "EC4899")],
+            startPoint: .top,
+            endPoint: .bottom
+        )
+    }
+    
+    // MARK: - Spacing (Airbnb Design System)
+    enum Spacing {
         static let xs: CGFloat = 4
         static let sm: CGFloat = 8
         static let md: CGFloat = 12
-        static let lg: CGFloat = 16
-        static let xl: CGFloat = 24
-        static let full: CGFloat = 9999
-    }
-    
-    // MARK: - Shadows
-    enum Shadow {
-        static let small = (radius: 2.0, x: 0.0, y: 1.0, opacity: 0.05)
-        static let medium = (radius: 8.0, x: 0.0, y: 2.0, opacity: 0.08)
-        static let large = (radius: 16.0, x: 0.0, y: 4.0, opacity: 0.12)
-        static let xlarge = (radius: 24.0, x: 0.0, y: 8.0, opacity: 0.15)
-    }
-    
-    // MARK: - Typography
-    enum Typography {
-        // Display
-        static let displayLarge = Font.system(size: 57, weight: .bold)
-        static let displayMedium = Font.system(size: 45, weight: .bold)
-        static let displaySmall = Font.system(size: 36, weight: .bold)
-        
-        // Headline
-        static let headlineLarge = Font.system(size: 32, weight: .semibold)
-        static let headlineMedium = Font.system(size: 28, weight: .semibold)
-        static let headlineSmall = Font.system(size: 24, weight: .semibold)
-        
-        // Title
-        static let titleLarge = Font.system(size: 22, weight: .medium)
-        static let titleMedium = Font.system(size: 16, weight: .medium)
-        static let titleSmall = Font.system(size: 14, weight: .medium)
-        
-        // Body
-        static let bodyLarge = Font.system(size: 16, weight: .regular)
-        static let bodyMedium = Font.system(size: 14, weight: .regular)
-        static let bodySmall = Font.system(size: 12, weight: .regular)
-        
-        // Label
-        static let labelLarge = Font.system(size: 14, weight: .semibold)
-        static let labelMedium = Font.system(size: 12, weight: .semibold)
-        static let labelSmall = Font.system(size: 11, weight: .semibold)
-        
-        // Convenience aliases
-        static let title = titleLarge
-        static let headline = headlineMedium
-        static let subheadline = titleSmall
-        static let body = bodyMedium
-        static let caption = labelSmall
-    }
-    
-    // MARK: - Animation Durations
-    enum Animation {
-        static let fast: Double = 0.2
-        static let normal: Double = 0.3
-        static let slow: Double = 0.5
-    }
-    
-    // MARK: - Icon Sizes
-    enum IconSize {
-        static let xs: CGFloat = 12
-        static let sm: CGFloat = 16
-        static let md: CGFloat = 20
+        static let base: CGFloat = 16
         static let lg: CGFloat = 24
         static let xl: CGFloat = 32
+        static let xl2: CGFloat = 40
+        static let xl3: CGFloat = 48
+        static let xl4: CGFloat = 64
+        
+        // Component spacing
+        static let cardPadding: CGFloat = 16
+        static let sectionPadding: CGFloat = 24
+        static let screenPadding: CGFloat = 24
+        static let listItemPadding: CGFloat = 16
+        
+        // Convenience aliases
+        static let small = sm
+        static let medium = base
+        static let large = lg
+    }
+    
+    // MARK: - Border Radius (Custom Rounded Design)
+    enum BorderRadius {
+        static let none: CGFloat = 0
+        static let sm: CGFloat = 8
+        static let md: CGFloat = 12
+        static let lg: CGFloat = 16
+        static let xl: CGFloat = 20
+        static let xl2: CGFloat = 24
+        static let xl3: CGFloat = 32
+        static let full: CGFloat = 9999
+        
+        // Component radii (more rounded for uniqueness)
+        static let button: CGFloat = 16
+        static let buttonLarge: CGFloat = 20
+        static let card: CGFloat = 20
+        static let cardLarge: CGFloat = 24
+        static let image: CGFloat = 16
+        static let modal: CGFloat = 24
+        static let sheet: CGFloat = 24
+        static let chip: CGFloat = 24
+        static let input: CGFloat = 12
+        static let badge: CGFloat = 12
+    }
+    
+    // MARK: - Shadows (Colored Shadows for Depth)
+    enum Shadow {
+        static let none = (radius: 0.0, x: 0.0, y: 0.0, opacity: 0.0)
+        static let small = (radius: 4.0, x: 0.0, y: 2.0, opacity: 0.08)
+        static let medium = (radius: 12.0, x: 0.0, y: 4.0, opacity: 0.12)
+        static let large = (radius: 24.0, x: 0.0, y: 8.0, opacity: 0.16)
+        static let colored = (radius: 16.0, x: 0.0, y: 4.0, opacity: 0.2)
+        static let glow = (radius: 20.0, x: 0.0, y: 0.0, opacity: 0.3)
+        
+        // For cards (with colored shadow)
+        static let card = (radius: 12.0, x: 0.0, y: 4.0, opacity: 0.12)
+    }
+    
+    // MARK: - Typography (Bold, Modern, Distinctive)
+    enum Typography {
+        // Display (extra bold, for hero sections)
+        static let displayLarge = Font.system(size: 40, weight: .black, design: .rounded)
+        static let displayMedium = Font.system(size: 32, weight: .heavy, design: .rounded)
+        
+        // Large Title & Titles (bold, rounded)
+        static let largeTitle = Font.system(size: 28, weight: .bold, design: .rounded)
+        static let title1 = Font.system(size: 24, weight: .bold, design: .rounded)
+        static let title2 = Font.system(size: 20, weight: .semibold, design: .rounded)
+        static let title3 = Font.system(size: 18, weight: .semibold, design: .rounded)
+        
+        // Headline & Body
+        static let headline = Font.system(size: 16, weight: .semibold, design: .rounded)
+        static let body = Font.system(size: 16, weight: .regular)
+        static let bodyEmphasis = Font.system(size: 16, weight: .semibold)
+        static let callout = Font.system(size: 15, weight: .medium)
+        static let subheadline = Font.system(size: 14, weight: .medium)
+        
+        // Small text
+        static let footnote = Font.system(size: 13, weight: .regular)
+        static let caption = Font.system(size: 12, weight: .medium)
+        static let overline = Font.system(size: 11, weight: .semibold).uppercaseSmallCaps()
+        
+        // Convenience aliases
+        static let title = title2
+        static let headlineSmall = title3
+        static let bodyMedium = body
+        static let labelLarge = headline
+    }
+    
+    // MARK: - Animation Durations (Airbnb Design System)
+    enum Animation {
+        static let instant: Double = 0.1
+        static let fast: Double = 0.2
+        static let normal: Double = 0.3
+        static let slow: Double = 0.4
+        static let verySlow: Double = 0.5
+    }
+    
+    // MARK: - Icon Sizes (Airbnb Design System)
+    enum IconSize {
+        static let small: CGFloat = 16
+        static let medium: CGFloat = 20
+        static let large: CGFloat = 24
+        static let xlarge: CGFloat = 32
+        
+        // Tab bar specific
+        static let tabBar: CGFloat = 24
+        
+        // Convenience aliases
+        static let sm = small
+        static let md = medium
+        static let lg = large
+        static let xl = xlarge
         static let xxl: CGFloat = 48
+    }
+    
+    // MARK: - Component Sizes (Larger for better touch)
+    enum ComponentSize {
+        // Button heights (larger than standard)
+        static let buttonHeight: CGFloat = 56
+        static let buttonSmallHeight: CGFloat = 44
+        
+        // Input heights
+        static let inputHeight: CGFloat = 56
+        
+        // Search bar
+        static let searchBarHeight: CGFloat = 56
+        
+        // Tab bar (taller for custom design)
+        static let tabBarHeight: CGFloat = 80
+        
+        // Navigation bar
+        static let navBarHeight: CGFloat = 44
+        
+        // Avatar sizes
+        static let avatarSmall: CGFloat = 32
+        static let avatarMedium: CGFloat = 40
+        static let avatarLarge: CGFloat = 64
+        static let avatarXLarge: CGFloat = 96
+        
+        // Minimum touch target
+        static let minTouchTarget: CGFloat = 44
+        
+        // Icon button
+        static let iconButton: CGFloat = 48
     }
 }
 
-// MARK: - View Extensions for Design Tokens
+// MARK: - View Extensions for Unique Design (Monika Custom)
 extension View {
+    /// Standard card with colored shadow
     func cardStyle() -> some View {
         self
-            .background(Color.adaptiveSurface)
-            .cornerRadius(DesignTokens.BorderRadius.lg)
+            .background(DesignTokens.Colors.white)
+            .cornerRadius(DesignTokens.BorderRadius.card)
             .shadow(
-                color: Color.black.opacity(DesignTokens.Shadow.medium.opacity),
-                radius: DesignTokens.Shadow.medium.radius,
-                x: DesignTokens.Shadow.medium.x,
-                y: DesignTokens.Shadow.medium.y
+                color: DesignTokens.Colors.primary.opacity(DesignTokens.Shadow.card.opacity),
+                radius: DesignTokens.Shadow.card.radius,
+                x: DesignTokens.Shadow.card.x,
+                y: DesignTokens.Shadow.card.y
             )
     }
     
+    /// Elevated card with stronger colored shadow
     func elevatedCardStyle() -> some View {
         self
-            .background(Color.adaptiveSurface)
-            .cornerRadius(DesignTokens.BorderRadius.lg)
+            .background(DesignTokens.Colors.white)
+            .cornerRadius(DesignTokens.BorderRadius.card)
             .shadow(
-                color: Color.black.opacity(DesignTokens.Shadow.large.opacity),
+                color: DesignTokens.Colors.primary.opacity(DesignTokens.Shadow.large.opacity),
                 radius: DesignTokens.Shadow.large.radius,
                 x: DesignTokens.Shadow.large.x,
                 y: DesignTokens.Shadow.large.y
             )
     }
     
-    func primaryButtonStyle() -> some View {
+    /// Glass morphism card
+    func glassCardStyle() -> some View {
         self
-            .padding(.vertical, DesignTokens.Spacing.md)
-            .padding(.horizontal, DesignTokens.Spacing.lg)
-            .background(Color.appPrimary)
-            .foregroundColor(.white)
-            .cornerRadius(DesignTokens.BorderRadius.md)
-            .font(DesignTokens.Typography.labelLarge)
+            .background(
+                DesignTokens.Colors.white.opacity(0.7)
+                    .background(.ultraThinMaterial)
+            )
+            .cornerRadius(DesignTokens.BorderRadius.card)
+            .overlay(
+                RoundedRectangle(cornerRadius: DesignTokens.BorderRadius.card)
+                    .stroke(DesignTokens.Colors.white.opacity(0.3), lineWidth: 1)
+            )
     }
     
+    /// Gradient card
+    func gradientCardStyle() -> some View {
+        self
+            .background(DesignTokens.Gradients.primary)
+            .cornerRadius(DesignTokens.BorderRadius.card)
+            .shadow(
+                color: DesignTokens.Colors.primary.opacity(0.3),
+                radius: 20,
+                x: 0,
+                y: 4
+            )
+    }
+    
+    /// Primary button with gradient
+    func primaryButtonStyle() -> some View {
+        self
+            .frame(height: DesignTokens.ComponentSize.buttonHeight)
+            .frame(maxWidth: .infinity)
+            .background(DesignTokens.Gradients.primary)
+            .foregroundColor(DesignTokens.Colors.white)
+            .cornerRadius(DesignTokens.BorderRadius.button)
+            .font(DesignTokens.Typography.headline)
+            .shadow(
+                color: DesignTokens.Colors.primary.opacity(DesignTokens.Shadow.colored.opacity),
+                radius: DesignTokens.Shadow.colored.radius,
+                x: DesignTokens.Shadow.colored.x,
+                y: DesignTokens.Shadow.colored.y
+            )
+    }
+    
+    /// Secondary button with subtle background
     func secondaryButtonStyle() -> some View {
         self
-            .padding(.vertical, DesignTokens.Spacing.md)
-            .padding(.horizontal, DesignTokens.Spacing.lg)
-            .background(Color.adaptiveSecondaryBackground)
-            .foregroundColor(.appPrimary)
-            .cornerRadius(DesignTokens.BorderRadius.md)
-            .font(DesignTokens.Typography.labelLarge)
+            .frame(height: DesignTokens.ComponentSize.buttonHeight)
+            .frame(maxWidth: .infinity)
+            .background(DesignTokens.Colors.primarySubtle)
+            .foregroundColor(DesignTokens.Colors.primary)
+            .cornerRadius(DesignTokens.BorderRadius.button)
+            .font(DesignTokens.Typography.headline)
+    }
+    
+    /// Outline button
+    func outlineButtonStyle() -> some View {
+        self
+            .frame(height: DesignTokens.ComponentSize.buttonHeight)
+            .frame(maxWidth: .infinity)
+            .background(Color.clear)
+            .foregroundColor(DesignTokens.Colors.primary)
+            .cornerRadius(DesignTokens.BorderRadius.button)
+            .font(DesignTokens.Typography.headline)
             .overlay(
-                RoundedRectangle(cornerRadius: DesignTokens.BorderRadius.md)
-                    .stroke(Color.appPrimary, lineWidth: 1.5)
+                RoundedRectangle(cornerRadius: DesignTokens.BorderRadius.button)
+                    .stroke(DesignTokens.Colors.primary, lineWidth: 2)
             )
+    }
+    
+    /// Gradient text
+    func gradientForeground() -> some View {
+        self.overlay(DesignTokens.Gradients.primary)
+            .mask(self)
     }
 }
 

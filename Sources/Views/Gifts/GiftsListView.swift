@@ -15,45 +15,68 @@ public struct GiftsListView: View {
     
     public var body: some View {
         NavigationStack {
-            VStack(spacing: 0) {
-                // Filter picker
-                Picker("Filter", selection: $filterPurchased) {
-                    ForEach(FilterOption.allCases, id: \.self) { option in
-                        Text(option.rawValue).tag(option)
-                    }
-                }
-                .pickerStyle(.segmented)
-                .padding()
+            ZStack {
+                // Gradient background
+                LinearGradient(
+                    colors: [
+                        DesignTokens.Colors.accentSubtle.opacity(0.2),
+                        DesignTokens.Colors.backgroundSecondary,
+                        DesignTokens.Colors.white
+                    ],
+                    startPoint: .topTrailing,
+                    endPoint: .bottomLeading
+                )
+                .ignoresSafeArea()
                 
-                ScrollView {
-                    VStack(spacing: DesignTokens.Spacing.medium) {
-                        SearchBar(text: $searchText, placeholder: "Search gifts...")
-                            .padding(.horizontal)
-                        
-                        // Grouped by person
-                        VStack(alignment: .leading, spacing: DesignTokens.Spacing.large) {
-                            GiftPersonSection(personName: "John Doe", gifts: [
-                                GiftItem(name: "Watch", price: 299.99, purchased: false, priority: "high"),
-                                GiftItem(name: "Book Collection", price: 49.99, purchased: true, priority: "medium")
-                            ])
-                            
-                            GiftPersonSection(personName: "Jane Smith", gifts: [
-                                GiftItem(name: "Necklace", price: 159.99, purchased: false, priority: "high")
-                            ])
+                VStack(spacing: 0) {
+                    // Filter picker with background
+                    VStack(spacing: 0) {
+                        Picker("Filter", selection: $filterPurchased) {
+                            ForEach(FilterOption.allCases, id: \.self) { option in
+                                Text(option.rawValue).tag(option)
+                            }
                         }
+                        .pickerStyle(.segmented)
                         .padding()
-                        
-                        // Empty state when no gifts
-                        if false {
-                            EmptyState(
-                                icon: "gift.fill",
-                                title: "No gifts yet",
-                                message: "Add gift ideas for your loved ones"
-                            )
-                            .padding()
-                        }
                     }
-                    .padding(.vertical)
+                    .background(
+                        LinearGradient(
+                            colors: [DesignTokens.Colors.accentSubtle.opacity(0.3), DesignTokens.Colors.white],
+                            startPoint: .top,
+                            endPoint: .bottom
+                        )
+                    )
+                    
+                    ScrollView {
+                        VStack(spacing: DesignTokens.Spacing.medium) {
+                            SearchBar(text: $searchText, placeholder: "Search gifts...")
+                                .padding(.horizontal)
+                            
+                            // Grouped by person
+                            VStack(alignment: .leading, spacing: DesignTokens.Spacing.large) {
+                                GiftPersonSection(personName: "John Doe", gifts: [
+                                    GiftItem(name: "Watch", price: 299.99, purchased: false, priority: "high"),
+                                    GiftItem(name: "Book Collection", price: 49.99, purchased: true, priority: "medium")
+                                ])
+                                
+                                GiftPersonSection(personName: "Jane Smith", gifts: [
+                                    GiftItem(name: "Necklace", price: 159.99, purchased: false, priority: "high")
+                                ])
+                            }
+                            .padding()
+                            
+                            // Empty state when no gifts
+                            if false {
+                                EmptyState(
+                                    icon: "gift.fill",
+                                    title: "No gifts yet",
+                                    message: "Add gift ideas for your loved ones"
+                                )
+                                .padding()
+                            }
+                        }
+                        .padding(.vertical)
+                    }
                 }
             }
             .navigationTitle("Gifts")

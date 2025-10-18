@@ -41,11 +41,25 @@ struct PrimaryButton: View {
                 }
             }
             .frame(maxWidth: fullWidth ? .infinity : nil)
-            .padding(.vertical, DesignTokens.Spacing.sm)
-            .padding(.horizontal, DesignTokens.Spacing.lg)
-            .background(isDisabled ? Color.gray : Color.appPrimary)
+            .frame(height: DesignTokens.ComponentSize.buttonHeight)
+            .padding(.horizontal, DesignTokens.Spacing.xl)
+            .background(
+                Group {
+                    if isDisabled {
+                        DesignTokens.Colors.slate400
+                    } else {
+                        DesignTokens.Gradients.primary
+                    }
+                }
+            )
             .foregroundColor(.white)
-            .cornerRadius(DesignTokens.BorderRadius.md)
+            .cornerRadius(DesignTokens.BorderRadius.button)
+            .shadow(
+                color: isDisabled ? .clear : DesignTokens.Colors.primary.opacity(0.2),
+                radius: 16,
+                x: 0,
+                y: 4
+            )
         }
         .disabled(isDisabled || isLoading)
     }

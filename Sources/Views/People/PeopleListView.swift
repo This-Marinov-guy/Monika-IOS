@@ -13,34 +13,48 @@ public struct PeopleListView: View {
     
     public var body: some View {
         NavigationStack {
-            ScrollView {
-                VStack(spacing: DesignTokens.Spacing.medium) {
-                    SearchBar(text: $searchText, placeholder: "Search people...")
-                        .padding(.horizontal)
-                    
-                    if viewModel.isLoading {
-                        ProgressView()
+            ZStack {
+                // Gradient background
+                LinearGradient(
+                    colors: [
+                        DesignTokens.Colors.primarySubtle.opacity(0.2),
+                        DesignTokens.Colors.backgroundSecondary,
+                        DesignTokens.Colors.white
+                    ],
+                    startPoint: .topLeading,
+                    endPoint: .bottomTrailing
+                )
+                .ignoresSafeArea()
+                
+                ScrollView {
+                    VStack(spacing: DesignTokens.Spacing.medium) {
+                        SearchBar(text: $searchText, placeholder: "Search people...")
+                            .padding(.horizontal)
+                        
+                        if viewModel.isLoading {
+                            ProgressView()
+                                .padding()
+                        } else if filteredPeople.isEmpty {
+                            EmptyState(
+                                icon: "person.2.fill",
+                                title: searchText.isEmpty ? "No people yet" : "No results",
+                                message: searchText.isEmpty ? "Add people to track their special days" : "Try a different search"
+                            )
                             .padding()
-                    } else if filteredPeople.isEmpty {
-                        EmptyState(
-                            icon: "person.2.fill",
-                            title: searchText.isEmpty ? "No people yet" : "No results",
-                            message: searchText.isEmpty ? "Add people to track their special days" : "Try a different search"
-                        )
-                        .padding()
-                    } else {
-                        LazyVGrid(columns: [
-                            GridItem(.flexible()),
-                            GridItem(.flexible())
-                        ], spacing: DesignTokens.Spacing.medium) {
-                            ForEach(filteredPeople) { person in
-                                PersonCard(person: person)
+                        } else {
+                            LazyVGrid(columns: [
+                                GridItem(.flexible()),
+                                GridItem(.flexible())
+                            ], spacing: DesignTokens.Spacing.medium) {
+                                ForEach(filteredPeople) { person in
+                                    PersonCard(person: person)
+                                }
                             }
+                            .padding(.horizontal)
                         }
-                        .padding(.horizontal)
                     }
+                    .padding(.vertical)
                 }
-                .padding(.vertical)
             }
             .navigationTitle("People")
             .toolbar {

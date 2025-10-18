@@ -14,13 +14,13 @@ struct PlannerCard<Content: View>: View {
     var body: some View {
         content
             .padding(padding)
-            .background(Color.adaptiveSurface)
-            .cornerRadius(DesignTokens.BorderRadius.lg)
+            .background(DesignTokens.Colors.white)
+            .cornerRadius(DesignTokens.BorderRadius.card)
             .shadow(
-                color: Color.black.opacity(elevated ? DesignTokens.Shadow.large.opacity : DesignTokens.Shadow.medium.opacity),
-                radius: elevated ? DesignTokens.Shadow.large.radius : DesignTokens.Shadow.medium.radius,
-                x: elevated ? DesignTokens.Shadow.large.x : DesignTokens.Shadow.medium.x,
-                y: elevated ? DesignTokens.Shadow.large.y : DesignTokens.Shadow.medium.y
+                color: DesignTokens.Colors.primary.opacity(elevated ? DesignTokens.Shadow.large.opacity : DesignTokens.Shadow.card.opacity),
+                radius: elevated ? DesignTokens.Shadow.large.radius : DesignTokens.Shadow.card.radius,
+                x: elevated ? DesignTokens.Shadow.large.x : DesignTokens.Shadow.card.x,
+                y: elevated ? DesignTokens.Shadow.large.y : DesignTokens.Shadow.card.y
             )
     }
 }

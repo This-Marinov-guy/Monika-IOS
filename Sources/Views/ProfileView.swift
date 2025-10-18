@@ -8,85 +8,149 @@ public struct ProfileView: View {
     public init() {}
     
     public var body: some View {
-        List {
-            // User info section
-            Section {
-                HStack {
-                    Image(systemName: "person.circle.fill")
-                        .font(.system(size: 60))
-                        .foregroundColor(.blue)
-                    
-                    VStack(alignment: .leading, spacing: 4) {
-                        Text("Email")
-                            .font(.caption)
-                            .foregroundColor(.secondary)
+        ZStack {
+            // Background
+            DesignTokens.Colors.backgroundSecondary
+                .ignoresSafeArea()
+            
+            List {
+                // User info section with gradient
+                Section {
+                    VStack(spacing: DesignTokens.Spacing.medium) {
+                        // Avatar with gradient background
+                        ZStack {
+                            Circle()
+                                .fill(DesignTokens.Gradients.primary)
+                                .frame(width: 80, height: 80)
+                                .shadow(
+                                    color: DesignTokens.Colors.primary.opacity(0.3),
+                                    radius: 20,
+                                    x: 0,
+                                    y: 4
+                                )
+                            
+                            Image(systemName: "person.circle.fill")
+                                .font(.system(size: 70))
+                                .foregroundColor(.white)
+                        }
                         
-                        if let email = authService.currentUser?.email {
-                            Text(email)
-                                .font(.body)
-                                .fontWeight(.medium)
+                        VStack(spacing: 4) {
+                            Text("Email")
+                                .font(DesignTokens.Typography.caption)
+                                .foregroundColor(DesignTokens.Colors.textSecondary)
+                            
+                            if let email = authService.currentUser?.email {
+                                Text(email)
+                                    .font(DesignTokens.Typography.body)
+                                    .fontWeight(.semibold)
+                                    .foregroundStyle(DesignTokens.Colors.textPrimary)
+                            }
                         }
                     }
-                    .padding(.leading, 10)
+                    .frame(maxWidth: .infinity)
+                    .padding(.vertical, DesignTokens.Spacing.large)
+                    .listRowBackground(
+                        DesignTokens.Gradients.subtle
+                            .opacity(0.5)
+                    )
                 }
-                .padding(.vertical, 10)
-            }
             
-            // User ID section
-            if let userId = authService.currentUser?.id {
-                Section("Account Details") {
+                // User ID section
+                if let userId = authService.currentUser?.id {
+                    Section {
+                        HStack {
+                            Image(systemName: "key.fill")
+                                .foregroundColor(DesignTokens.Colors.primary)
+                                .frame(width: 24)
+                            Text("User ID")
+                                .foregroundColor(DesignTokens.Colors.textSecondary)
+                            Spacer()
+                            Text(userId.uuidString.prefix(8) + "...")
+                                .font(.caption)
+                                .foregroundColor(DesignTokens.Colors.textTertiary)
+                        }
+                    } header: {
+                        Text("Account Details")
+                            .foregroundStyle(DesignTokens.Colors.textBrand)
+                            .fontWeight(.semibold)
+                    }
+                    .listRowBackground(DesignTokens.Colors.white)
+                }
+                
+                // Appearance section
+                Section {
+                    Toggle(isOn: $themeManager.isDarkMode) {
+                        HStack(spacing: DesignTokens.Spacing.medium) {
+                            ZStack {
+                                Circle()
+                                    .fill(DesignTokens.Colors.primarySubtle)
+                                    .frame(width: 36, height: 36)
+                                
+                                Image(systemName: themeManager.isDarkMode ? "moon.fill" : "sun.max.fill")
+                                    .foregroundColor(DesignTokens.Colors.primary)
+                            }
+                            Text("Dark Mode")
+                                .foregroundStyle(DesignTokens.Colors.textPrimary)
+                        }
+                    }
+                    .tint(DesignTokens.Colors.primary)
+                } header: {
+                    Text("Appearance")
+                        .foregroundStyle(DesignTokens.Colors.textBrand)
+                        .fontWeight(.semibold)
+                }
+                .listRowBackground(DesignTokens.Colors.white)
+                
+                // About section
+                Section {
                     HStack {
-                        Text("User ID")
-                            .foregroundColor(.secondary)
+                        Image(systemName: "info.circle.fill")
+                            .foregroundColor(DesignTokens.Colors.info)
+                            .frame(width: 24)
+                        Text("Version")
+                            .foregroundColor(DesignTokens.Colors.textSecondary)
                         Spacer()
-                        Text(userId.uuidString.prefix(8) + "...")
-                            .font(.caption)
-                            .foregroundColor(.secondary)
+                        Text("1.0.0")
+                            .foregroundColor(DesignTokens.Colors.textTertiary)
                     }
-                }
-            }
-            
-            // Appearance section
-            Section("Appearance") {
-                Toggle(isOn: $themeManager.isDarkMode) {
                     HStack {
-                        Image(systemName: themeManager.isDarkMode ? "moon.fill" : "sun.max.fill")
+                        Image(systemName: "app.fill")
                             .foregroundColor(DesignTokens.Colors.primary)
-                        Text("Dark Mode")
+                            .frame(width: 24)
+                        Text("App")
+                            .foregroundColor(DesignTokens.Colors.textSecondary)
+                        Spacer()
+                        Text("Monika Swift Planner")
+                            .foregroundColor(DesignTokens.Colors.textTertiary)
+                    }
+                } header: {
+                    Text("About")
+                        .foregroundStyle(DesignTokens.Colors.textBrand)
+                        .fontWeight(.semibold)
+                }
+                .listRowBackground(DesignTokens.Colors.white)
+                
+                // Actions section
+                Section {
+                    Button(role: .destructive) {
+                        showingSignOutAlert = true
+                    } label: {
+                        HStack(spacing: DesignTokens.Spacing.medium) {
+                            ZStack {
+                                Circle()
+                                    .fill(Color.red.opacity(0.1))
+                                    .frame(width: 36, height: 36)
+                                
+                                Image(systemName: "rectangle.portrait.and.arrow.right")
+                                    .foregroundColor(.red)
+                            }
+                            Text("Sign Out")
+                        }
                     }
                 }
-                .tint(DesignTokens.Colors.primary)
+                .listRowBackground(DesignTokens.Colors.white)
             }
-            
-            // About section
-            Section("About") {
-                HStack {
-                    Text("Version")
-                        .foregroundColor(.secondary)
-                    Spacer()
-                    Text("1.0.0")
-                        .foregroundColor(.secondary)
-                }
-                HStack {
-                    Text("App")
-                        .foregroundColor(.secondary)
-                    Spacer()
-                    Text("Monika Swift Planner")
-                        .foregroundColor(.secondary)
-                }
-            }
-            
-            // Actions section
-            Section {
-                Button(role: .destructive) {
-                    showingSignOutAlert = true
-                } label: {
-                    HStack {
-                        Image(systemName: "rectangle.portrait.and.arrow.right")
-                        Text("Sign Out")
-                    }
-                }
-            }
+            .scrollContentBackground(.hidden)
         }
         .navigationTitle("Profile")
     #if os(iOS)

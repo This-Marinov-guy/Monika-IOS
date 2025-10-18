@@ -25,43 +25,52 @@ public class ThemeManager: ObservableObject {
 
 // MARK: - Color Extensions
 extension Color {
-    // Airbnb-inspired primary color
-    static let appPrimary = Color(hex: "#FF385C")
-    static let appPrimaryDark = Color(hex: "#E31C5F")
+    // Primary Brand Colors (Airbnb Design System)
+    static let appPrimary = Color(hex: "#FF5A5F")
+    static let appPrimaryDark = Color(hex: "#E0484C")
+    static let appPrimaryLight = Color(hex: "#FF7E82")
+    static let appPrimarySubtle = Color(hex: "#FFE8E9")
     
-    // Semantic colors for light mode
+    // Neutral Colors
+    static let neutralBlack = Color(hex: "#222222")
+    static let neutralGray900 = Color(hex: "#484848")
+    static let neutralGray700 = Color(hex: "#717171")
+    static let neutralGray500 = Color(hex: "#B0B0B0")
+    static let neutralGray300 = Color(hex: "#DDDDDD")
+    static let neutralGray100 = Color(hex: "#EBEBEB")
+    static let neutralGray50 = Color(hex: "#F7F7F7")
+    static let neutralWhite = Color(hex: "#FFFFFF")
+    
+    // Semantic Colors
+    static let semanticSuccess = Color(hex: "#00A699")
+    static let semanticWarning = Color(hex: "#FFB400")
+    static let semanticError = Color(hex: "#FF5A5F")
+    static let semanticInfo = Color(hex: "#007AFF")
+    
+    // Background Colors
     static let appBackground = Color(hex: "#FFFFFF")
     static let appBackgroundSecondary = Color(hex: "#F7F7F7")
-    static let appSurface = Color(hex: "#FFFFFF")
-    static let appBorder = Color(hex: "#DDDDDD")
+    static let appBackgroundTertiary = Color(hex: "#EBEBEB")
     
-    // Dark mode colors
-    static let appBackgroundDark = Color(hex: "#000000")
-    static let appBackgroundSecondaryDark = Color(hex: "#1A1A1A")
-    static let appSurfaceDark = Color(hex: "#222222")
-    static let appBorderDark = Color(hex: "#3A3A3A")
-    
-    // Text colors
+    // Text Colors
     static let appTextPrimary = Color(hex: "#222222")
     static let appTextSecondary = Color(hex: "#717171")
     static let appTextTertiary = Color(hex: "#B0B0B0")
-    
-    static let appTextPrimaryDark = Color(hex: "#FFFFFF")
-    static let appTextSecondaryDark = Color(hex: "#B0B0B0")
-    static let appTextTertiaryDark = Color(hex: "#717171")
+    static let appTextInverse = Color(hex: "#FFFFFF")
+    static let appTextLink = Color(hex: "#007AFF")
     
     // Category colors
-    static let categoryBirthday = Color(hex: "#FF385C")
-    static let categoryAnniversary = Color(hex: "#E00B5C")
+    static let categoryBirthday = Color(hex: "#FF5A5F")
+    static let categoryAnniversary = Color(hex: "#E0484C")
     static let categoryHoliday = Color(hex: "#FFB400")
     static let categoryReminder = Color(hex: "#00A699")
-    static let categoryOther = Color(hex: "#8B8B8B")
+    static let categoryOther = Color(hex: "#717171")
     
     // Priority colors
-    static let priorityLow = Color.gray
-    static let priorityMedium = Color.blue
-    static let priorityHigh = Color.orange
-    static let priorityWishlist = Color.purple
+    static let priorityLow = Color(hex: "#B0B0B0")
+    static let priorityMedium = Color(hex: "#007AFF")
+    static let priorityHigh = Color(hex: "#FFB400")
+    static let priorityWishlist = Color(hex: "#FF5A5F")
     
     // Helper init from hex
     init(hex: String) {

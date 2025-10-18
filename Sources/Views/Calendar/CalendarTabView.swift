@@ -9,28 +9,43 @@ public struct CalendarTabView: View {
     
     public var body: some View {
         NavigationStack {
-            VStack(spacing: 0) {
-                // View mode picker
-                Picker("View Mode", selection: $viewMode) {
-                    Text("Week").tag(CalendarViewMode.week)
-                    Text("Month").tag(CalendarViewMode.month)
-                }
-                .pickerStyle(.segmented)
-                .padding()
+            ZStack {
+                // Background gradient
+                DesignTokens.Colors.backgroundSecondary
+                    .ignoresSafeArea()
                 
-                // Calendar content
-                ScrollView {
-                    VStack(spacing: DesignTokens.Spacing.large) {
-                        if viewMode == .week {
-                            WeekView(selectedDate: $selectedDate)
-                        } else {
-                            MonthView(selectedDate: $selectedDate)
+                VStack(spacing: 0) {
+                    // View mode picker with gradient background
+                    VStack(spacing: 0) {
+                        Picker("View Mode", selection: $viewMode) {
+                            Text("Week").tag(CalendarViewMode.week)
+                            Text("Month").tag(CalendarViewMode.month)
                         }
-                        
-                        // Upcoming events section
-                        UpcomingEventsSection()
+                        .pickerStyle(.segmented)
+                        .padding()
                     }
-                    .padding()
+                    .background(
+                        LinearGradient(
+                            colors: [DesignTokens.Colors.primarySubtle.opacity(0.3), DesignTokens.Colors.white],
+                            startPoint: .top,
+                            endPoint: .bottom
+                        )
+                    )
+                    
+                    // Calendar content
+                    ScrollView {
+                        VStack(spacing: DesignTokens.Spacing.large) {
+                            if viewMode == .week {
+                                WeekView(selectedDate: $selectedDate)
+                            } else {
+                                MonthView(selectedDate: $selectedDate)
+                            }
+                            
+                            // Upcoming events section
+                            UpcomingEventsSection()
+                        }
+                        .padding()
+                    }
                 }
             }
             .navigationTitle("Calendar")
