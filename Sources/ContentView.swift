@@ -1,13 +1,15 @@
 import SwiftUI
 
-struct ContentView: View {
+public struct ContentView: View {
     @EnvironmentObject var authService: AuthService
     @State private var showingAuth = false
     
-    var body: some View {
+    public init() {}
+    
+    public var body: some View {
         Group {
             if authService.isAuthenticated {
-                HomeView()
+                MainTabView()
             } else {
                 WelcomeView(showingAuth: $showingAuth)
             }

@@ -1,10 +1,13 @@
 import SwiftUI
 
-struct ProfileView: View {
+public struct ProfileView: View {
     @EnvironmentObject var authService: AuthService
+    @EnvironmentObject var themeManager: ThemeManager
     @State private var showingSignOutAlert = false
     
-    var body: some View {
+    public init() {}
+    
+    public var body: some View {
         List {
             // User info section
             Section {
@@ -40,6 +43,36 @@ struct ProfileView: View {
                             .font(.caption)
                             .foregroundColor(.secondary)
                     }
+                }
+            }
+            
+            // Appearance section
+            Section("Appearance") {
+                Toggle(isOn: $themeManager.isDarkMode) {
+                    HStack {
+                        Image(systemName: themeManager.isDarkMode ? "moon.fill" : "sun.max.fill")
+                            .foregroundColor(DesignTokens.Colors.primary)
+                        Text("Dark Mode")
+                    }
+                }
+                .tint(DesignTokens.Colors.primary)
+            }
+            
+            // About section
+            Section("About") {
+                HStack {
+                    Text("Version")
+                        .foregroundColor(.secondary)
+                    Spacer()
+                    Text("1.0.0")
+                        .foregroundColor(.secondary)
+                }
+                HStack {
+                    Text("App")
+                        .foregroundColor(.secondary)
+                    Spacer()
+                    Text("Monika Swift Planner")
+                        .foregroundColor(.secondary)
                 }
             }
             

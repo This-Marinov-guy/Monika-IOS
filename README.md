@@ -1,19 +1,22 @@
 # Monika Swift
 
-A SwiftUI application built with Swift Package Manager and Supabase authentication.
+A beautiful SwiftUI planner app with Supabase backend for tracking important dates, people, events, and gifts.
 
 ## Features
 
-- Modern SwiftUI interface
-- Cross-platform support (macOS 13+, iOS 16+)
-- Supabase authentication (email/password, password recovery)
-- Session management with auto-restore
-- Google Sign-In placeholder (ready for iOS implementation)
+- 🎨 Modern Airbnb-inspired design with light/dark mode
+- 📅 Calendar views (weekly & monthly)
+- 👥 People management with birthdays
+- 🎉 Event tracking with categories and reminders
+- 🎁 Gift ideas with priority levels
+- 🔐 Supabase authentication
+- ☁️ Cloud sync across devices
 
 ## Requirements
 
 - Swift 6.1 or later
-- macOS 14+ or iOS 16+
+- **iOS**: iOS 16+ (use MonikaSwiftiOS project)
+- **macOS**: macOS 14+ (use Package.swift)
 - Xcode 15+ (recommended)
 - Supabase account and project
 
@@ -21,97 +24,70 @@ A SwiftUI application built with Swift Package Manager and Supabase authenticati
 
 ### 1. Environment Variables
 
-Create a `.env` file in the root directory (or use the provided `.env.example` as a template):
+The `.env` file already exists with your Supabase credentials. The app will automatically load them.
 
-```bash
-cp .env.example .env
-```
+### 2. Database Setup
 
-Then edit `.env` with your Supabase credentials:
+Run the SQL schema in your Supabase project:
 
-```env
-SUPABASE_URL=your_supabase_url_here
-SUPABASE_ANON_KEY=your_supabase_anon_key_here
-```
+1. Go to your Supabase project dashboard
+2. Navigate to SQL Editor
+3. Copy and paste the contents of `supabase_schema.sql`
+4. Run the query
 
-**Note:** The `.env` file is gitignored to protect your secrets.
-
-### 2. Running the App
-
-#### Option A: Using the run script (loads .env automatically)
-
-```bash
-./run.sh
-```
-
-#### Option B: Manual run with environment variables
-
-```bash
-# Export environment variables
-export SUPABASE_URL=your_supabase_url
-export SUPABASE_ANON_KEY=your_anon_key
-
-# Run the app
-swift run
-```
-
-#### Option C: Running in Xcode
-
-1. Open the project:
-   ```bash
-   xed .
-   ```
-
-2. Set environment variables in Xcode:
-   - Select the scheme (MonikaSwift) → Edit Scheme
-   - Go to Run → Arguments → Environment Variables
-   - Add:
-     - `SUPABASE_URL` = your Supabase URL
-     - `SUPABASE_ANON_KEY` = your Supabase anon key
-
-3. Press ⌘+R to run
+This creates the `people`, `events`, and `gifts` tables with Row Level Security.
 
 ## Getting Started
 
-### Building the Project
+### For iOS Development 📱
 
 ```bash
-swift build
+cd MonikaSwiftiOS
+open MonikaSwiftiOS.xcodeproj
 ```
 
-### Running the Project
+**In Xcode:**
+1. **Add Supabase Package** (first time only):
+   - File → Add Package Dependencies
+   - URL: `https://github.com/supabase/supabase-swift.git`
+   - Version: `2.0.0` or "Up to Next Major"
+   - Click "Add Package"
+
+2. **Select iOS Simulator**: Choose any iPhone from the device selector
+
+3. **Run**: Press ⌘+R
+
+📖 **Detailed instructions:** See [QUICK_START_IOS.md](QUICK_START_IOS.md)
+
+### For macOS Development 💻
 
 ```bash
+# Run with environment variables loaded
 ./run.sh
-# or
-swift run
+
+# Or open Package.swift in Xcode
+xed .
 ```
 
 ## Project Structure
 
 ```
 monika-swift/
-├── Package.swift                 # Swift Package Manager configuration
-├── .env                          # Environment variables (gitignored)
-├── .env.example                  # Template for environment variables
-├── run.sh                        # Script to run app with .env loaded
-├── Sources/
-│   ├── MonikaSwiftApp.swift     # App entry point with @main
-│   ├── ContentView.swift        # Main app view with auth handling
-│   ├── Configs/
-│   │   └── Config.swift         # Configuration (reads from env vars)
-│   ├── Clients/
-│   │   └── SupabaseClient.swift # Supabase client instance
-│   ├── Services/
-│   │   └── AuthService.swift    # Authentication service
-│   └── Views/
-│       ├── Auth/                # Authentication views
-│       │   ├── LoginView.swift
-│       │   ├── SignUpView.swift
-│       │   ├── ForgotPasswordView.swift
-│       │   └── AuthContainerView.swift
-│       ├── HomeView.swift       # Home screen
-│       └── ProfileView.swift    # Profile screen
+├── Package.swift                    # SPM configuration (macOS)
+├── MonikaSwiftiOS/                  # iOS Xcode project
+│   ├── MonikaSwiftiOS.xcodeproj    # Open this for iOS development
+│   └── MonikaSwiftiOS/
+│       ├── MonikaSwiftiOSApp.swift # iOS app entry point
+│       └── [symlinks to Sources/]   # All code symlinked (no duplication)
+├── Sources/                         # Main codebase (shared by both)
+│   ├── Models/                     # Data models (Person, Event, Gift)
+│   ├── Services/                   # Supabase services
+│   ├── Theme/                      # Design system & components
+│   ├── Components/                 # Reusable UI components
+│   ├── Views/                      # SwiftUI views
+│   └── Configs/                    # Configuration
+├── supabase_schema.sql             # Database schema
+├── .env                            # Supabase credentials (gitignored)
 └── README.md
 ```
 

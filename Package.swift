@@ -9,16 +9,35 @@ let package = Package(
         .macOS(.v14),
         .iOS(.v16)
     ],
+    products: [
+        // Library product for iOS app to import
+        .library(
+            name: "MonikaSwiftCore",
+            targets: ["MonikaSwiftCore"]),
+        // Executable for macOS
+        .executable(
+            name: "MonikaSwift",
+            targets: ["MonikaSwift"]),
+    ],
     dependencies: [
         .package(url: "https://github.com/supabase/supabase-swift.git", from: "2.0.0")
     ],
     targets: [
-        // Targets are the basic building blocks of a package, defining a module or a test suite.
-        // Targets can depend on other targets in this package and products from dependencies.
-        .executableTarget(
-            name: "MonikaSwift",
+        // Core library with all the app code (shared between macOS and iOS)
+        .target(
+            name: "MonikaSwiftCore",
             dependencies: [
                 .product(name: "Supabase", package: "supabase-swift")
-            ]),
+            ],
+            path: "Sources",
+            exclude: ["MonikaSwiftApp.swift"]
+        ),
+        // macOS executable target
+        .executableTarget(
+            name: "MonikaSwift",
+            dependencies: ["MonikaSwiftCore"],
+            path: "Sources",
+            sources: ["MonikaSwiftApp.swift"]
+        ),
     ]
 )

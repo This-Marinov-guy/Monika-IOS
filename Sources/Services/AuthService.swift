@@ -3,15 +3,15 @@ import Supabase
 import Combine
 
 @MainActor
-class AuthService: ObservableObject {
-    @Published var currentUser: User?
-    @Published var isAuthenticated = false
-    @Published var isLoading = false
-    @Published var errorMessage: String?
+public class AuthService: ObservableObject {
+    @Published public var currentUser: User?
+    @Published public var isAuthenticated = false
+    @Published public var isLoading = false
+    @Published public var errorMessage: String?
     
     private var authStateChangeTask: Task<Void, Never>?
     
-    init() {
+    public init() {
         Task {
             await checkSession()
             await observeAuthStateChanges()
