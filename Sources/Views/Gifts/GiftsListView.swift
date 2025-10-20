@@ -87,6 +87,13 @@ public struct GiftsListView: View {
                             .foregroundStyle(DesignTokens.Colors.primary)
                     }
                 }
+                ToolbarItem(placement: .navigationBarTrailing) {
+                    NavigationLink {
+                        GiftSuggestionsView()
+                    } label: {
+                        Text("Suggestions")
+                    }
+                }
             }
             .sheet(isPresented: $showingGiftForm) {
                 GiftFormSheet()

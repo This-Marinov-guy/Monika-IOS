@@ -49,6 +49,8 @@ struct WeekView: View {
                 }
             }
         }
+        .panelBackgroundGreen(colorScheme)
+        .cornerRadius(DesignTokens.BorderRadius.card)
     }
     
     private var weekRangeText: String {

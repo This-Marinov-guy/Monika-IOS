@@ -19,6 +19,12 @@ enum DesignTokens {
         static let accentDark = Color(hex: "9381FF")
         static let accentLight = Color(hex: "B2A8FF")
         static let accentSubtle = Color(hex: "EFEBFF")
+
+        // Green (Supportive / Nature)
+        static let green = Color(hex: "34D399")
+        static let greenDark = Color(hex: "10B981")
+        static let greenLight = Color(hex: "A7F3D0")
+        static let greenSubtle = Color(hex: "ECFDF5")
         
         // Neutral Slate
         static let black = Color(hex: "0F172A")
@@ -348,6 +354,52 @@ extension View {
             )
     }
     
+    /// Subtle gradient background for panels/cards (no radius/shadow)
+    func panelBackground(_ colorScheme: ColorScheme) -> some View {
+        let gradient = colorScheme == .dark
+            ? LinearGradient(
+                colors: [
+                    DesignTokens.Colors.primaryDark.opacity(0.10),
+                    DesignTokens.Colors.backgroundDarkSecondary
+                ],
+                startPoint: .topLeading,
+                endPoint: .bottomTrailing
+            )
+            : LinearGradient(
+                colors: [
+                    DesignTokens.Colors.primarySubtle.opacity(0.40),
+                    DesignTokens.Colors.backgroundSecondary
+                ],
+                startPoint: .topLeading,
+                endPoint: .bottomTrailing
+            )
+
+        return self.background(gradient)
+    }
+
+    /// Subtle green-tinted gradient for panels/cards (no radius/shadow)
+    func panelBackgroundGreen(_ colorScheme: ColorScheme) -> some View {
+        let gradient = colorScheme == .dark
+            ? LinearGradient(
+                colors: [
+                    DesignTokens.Colors.greenDark.opacity(0.14),
+                    DesignTokens.Colors.backgroundDarkSecondary
+                ],
+                startPoint: .topLeading,
+                endPoint: .bottomTrailing
+            )
+            : LinearGradient(
+                colors: [
+                    DesignTokens.Colors.greenSubtle,
+                    DesignTokens.Colors.backgroundSecondary
+                ],
+                startPoint: .topLeading,
+                endPoint: .bottomTrailing
+            )
+
+        return self.background(gradient)
+    }
+
     /// Elevated card with stronger colored shadow
     func elevatedCardStyle() -> some View {
         self

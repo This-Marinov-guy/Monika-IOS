@@ -76,6 +76,8 @@ struct MonthView: View {
                 }
             }
         }
+        .panelBackgroundGreen(colorScheme)
+        .cornerRadius(DesignTokens.BorderRadius.card)
     }
 }
 
