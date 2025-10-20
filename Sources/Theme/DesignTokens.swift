@@ -3,18 +3,22 @@ import SwiftUI
 enum DesignTokens {
     // MARK: - Colors (Monika Custom Design System)
     enum Colors {
-        // Primary Brand (Indigo)
-        static let primary = Color(hex: "6366F1")
-        static let primaryDark = Color(hex: "4F46E5")
-        static let primaryLight = Color(hex: "818CF8")
-        static let primaryGlow = Color(hex: "A5B4FC")
-        static let primarySubtle = Color(hex: "E0E7FF")
+        // Primary Brand (Playful Pink)
+        static let primary = Color(hex: "FF69B4")
+        static let primaryDark = Color(hex: "FF85C1")
+        static let primaryLight = Color(hex: "FFA3CF")
+        static let primaryGlow = Color(hex: "FFC2DC")
+        static let primarySubtle = Color(hex: "FFE6F2")
         
-        // Secondary Accent (Pink)
-        static let accent = Color(hex: "EC4899")
-        static let accentDark = Color(hex: "DB2777")
-        static let accentLight = Color(hex: "F472B6")
-        static let accentSubtle = Color(hex: "FCE7F3")
+        // Secondary (Sunshine Yellow)
+        static let secondary = Color(hex: "FFD166")
+        static let secondaryDark = Color(hex: "FFD97D")
+        
+        // Accent (Lilac Blue)
+        static let accent = Color(hex: "6C63FF")
+        static let accentDark = Color(hex: "9381FF")
+        static let accentLight = Color(hex: "B2A8FF")
+        static let accentSubtle = Color(hex: "EFEBFF")
         
         // Neutral Slate
         static let black = Color(hex: "0F172A")
@@ -30,7 +34,8 @@ enum DesignTokens {
         static let white = Color.white
         
         // Semantic
-        static let success = Color(hex: "10B981")
+        static let success = Color(hex: "5DD39E")
+        static let successDark = Color(hex: "67E8A3")
         static let successLight = Color(hex: "D1FAE5")
         static let warning = Color(hex: "F59E0B")
         static let warningLight = Color(hex: "FEF3C7")
@@ -40,55 +45,56 @@ enum DesignTokens {
         static let infoLight = Color(hex: "DBEAFE")
         
         // Background - Adaptive for Light/Dark Mode
-        static let background = Color(hex: "FFFFFF")
-        static let backgroundSecondary = Color(hex: "F8FAFC")
-        static let backgroundTertiary = Color(hex: "F1F5F9")
-        static let backgroundDark = Color(hex: "0F172A")
-        static let backgroundDarkSecondary = Color(hex: "1E293B")
-        static let backgroundDarkTertiary = Color(hex: "334155")
+        static let background = Color(hex: "FFF9FB")
+        static let backgroundSecondary = Color(hex: "FFFFFF")
+        static let backgroundTertiary = Color(hex: "FFF0F6")
+        static let backgroundDark = Color(hex: "1A1A1A")
+        static let backgroundDarkSecondary = Color(hex: "2B2B2B")
+        static let backgroundDarkTertiary = Color(hex: "333333")
         static let surface = Color.white
-        static let surfaceDark = Color(hex: "1E293B")
+        static let surfaceDark = Color(hex: "2B2B2B")
         
         // Text - Adaptive for Light/Dark Mode
-        static let textPrimary = Color(hex: "0F172A")
-        static let textPrimaryDark = Color(hex: "F8FAFC")
-        static let textSecondary = Color(hex: "475569")
-        static let textSecondaryDark = Color(hex: "CBD5E1")
+        static let textPrimary = Color(hex: "2D2D2D")
+        static let textPrimaryDark = Color(hex: "FFFFFF")
+        static let textSecondary = Color(hex: "707070")
+        static let textSecondaryDark = Color(hex: "BDBDBD")
         static let textTertiary = Color(hex: "94A3B8")
         static let textTertiaryDark = Color(hex: "94A3B8")
         static let textInverse = Color.white
-        static let textBrand = Color(hex: "6366F1")
-        static let textAccent = Color(hex: "EC4899")
+        static let textBrand = Color(hex: "FF69B4")
+        static let textAccent = Color(hex: "6C63FF")
     }
     
     // MARK: - Gradients
     enum Gradients {
         static let primary = LinearGradient(
-            colors: [Color(hex: "6366F1"), Color(hex: "EC4899")],
+            colors: [Color(hex: "FF69B4"), Color(hex: "6C63FF")],
             startPoint: .leading,
             endPoint: .trailing
         )
         
+        // CTA gradient (pink → yellow)
         static let secondary = LinearGradient(
-            colors: [Color(hex: "818CF8"), Color(hex: "F472B6")],
+            colors: [Color(hex: "FF69B4"), Color(hex: "FFD166")],
             startPoint: .leading,
             endPoint: .trailing
         )
         
         static let dark = LinearGradient(
-            colors: [Color(hex: "4F46E5"), Color(hex: "DB2777")],
+            colors: [Color(hex: "FF85C1"), Color(hex: "9381FF")],
             startPoint: .leading,
             endPoint: .trailing
         )
         
         static let subtle = LinearGradient(
-            colors: [Color(hex: "E0E7FF"), Color(hex: "FCE7F3")],
+            colors: [Color(hex: "FFE6F2"), Color(hex: "EFEBFF")],
             startPoint: .topLeading,
             endPoint: .bottomTrailing
         )
         
         static let vertical = LinearGradient(
-            colors: [Color(hex: "6366F1"), Color(hex: "EC4899")],
+            colors: [Color(hex: "FF69B4"), Color(hex: "6C63FF")],
             startPoint: .top,
             endPoint: .bottom
         )
@@ -96,9 +102,9 @@ enum DesignTokens {
         // Adaptive background gradients for light mode
         static let backgroundLight = LinearGradient(
             colors: [
-                Color(hex: "E0E7FF").opacity(0.3),
-                Color(hex: "F8FAFC"),
-                Color.white
+                Color(hex: "FFF0F6").opacity(0.4),
+                Color(hex: "FFF9FB"),
+                Color(hex: "FFFFFF")
             ],
             startPoint: .topLeading,
             endPoint: .bottomTrailing
@@ -106,9 +112,9 @@ enum DesignTokens {
         
         static let backgroundLightCalendar = LinearGradient(
             colors: [
-                Color(hex: "E0E7FF").opacity(0.4),
-                Color(hex: "F8FAFC"),
-                Color.white
+                Color(hex: "FFF0F6").opacity(0.45),
+                Color(hex: "FFF9FB"),
+                Color(hex: "FFFFFF")
             ],
             startPoint: .top,
             endPoint: .bottom
@@ -116,9 +122,9 @@ enum DesignTokens {
         
         static let backgroundLightPeople = LinearGradient(
             colors: [
-                Color(hex: "E0E7FF").opacity(0.3),
-                Color(hex: "F8FAFC"),
-                Color.white
+                Color(hex: "EFEBFF").opacity(0.35),
+                Color(hex: "FFF9FB"),
+                Color(hex: "FFFFFF")
             ],
             startPoint: .topLeading,
             endPoint: .bottomTrailing
@@ -126,9 +132,9 @@ enum DesignTokens {
         
         static let backgroundLightGifts = LinearGradient(
             colors: [
-                Color(hex: "FCE7F3").opacity(0.3),
-                Color(hex: "F8FAFC"),
-                Color.white
+                Color(hex: "FFE6F2").opacity(0.4),
+                Color(hex: "FFF9FB"),
+                Color(hex: "FFFFFF")
             ],
             startPoint: .topTrailing,
             endPoint: .bottomLeading
@@ -137,9 +143,9 @@ enum DesignTokens {
         // Adaptive background gradients for dark mode
         static let backgroundDark = LinearGradient(
             colors: [
-                Color(hex: "4F46E5").opacity(0.15),
-                Color(hex: "1E293B"),
-                Color(hex: "0F172A")
+                Color(hex: "FF85C1").opacity(0.12),
+                Color(hex: "2B2B2B"),
+                Color(hex: "1A1A1A")
             ],
             startPoint: .topLeading,
             endPoint: .bottomTrailing
@@ -147,9 +153,9 @@ enum DesignTokens {
         
         static let backgroundDarkCalendar = LinearGradient(
             colors: [
-                Color(hex: "4F46E5").opacity(0.2),
-                Color(hex: "1E293B"),
-                Color(hex: "0F172A")
+                Color(hex: "FF85C1").opacity(0.15),
+                Color(hex: "2B2B2B"),
+                Color(hex: "1A1A1A")
             ],
             startPoint: .top,
             endPoint: .bottom
@@ -157,9 +163,9 @@ enum DesignTokens {
         
         static let backgroundDarkPeople = LinearGradient(
             colors: [
-                Color(hex: "4F46E5").opacity(0.15),
-                Color(hex: "1E293B"),
-                Color(hex: "0F172A")
+                Color(hex: "9381FF").opacity(0.15),
+                Color(hex: "2B2B2B"),
+                Color(hex: "1A1A1A")
             ],
             startPoint: .topLeading,
             endPoint: .bottomTrailing
@@ -167,9 +173,9 @@ enum DesignTokens {
         
         static let backgroundDarkGifts = LinearGradient(
             colors: [
-                Color(hex: "DB2777").opacity(0.15),
-                Color(hex: "1E293B"),
-                Color(hex: "0F172A")
+                Color(hex: "FFD97D").opacity(0.12),
+                Color(hex: "2B2B2B"),
+                Color(hex: "1A1A1A")
             ],
             startPoint: .topTrailing,
             endPoint: .bottomLeading
@@ -387,7 +393,7 @@ extension View {
         self
             .frame(height: DesignTokens.ComponentSize.buttonHeight)
             .frame(maxWidth: .infinity)
-            .background(DesignTokens.Gradients.primary)
+            .background(DesignTokens.Gradients.secondary)
             .foregroundColor(DesignTokens.Colors.white)
             .cornerRadius(DesignTokens.BorderRadius.button)
             .font(DesignTokens.Typography.headline)
