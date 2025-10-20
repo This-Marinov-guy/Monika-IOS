@@ -69,15 +69,15 @@ public struct HomeDashboardView: View {
                                     .foregroundStyle(DesignTokens.Colors.adaptiveTextPrimary(colorScheme))
                                 Spacer()
                             }
-                            .padding(DesignTokens.Spacing.base)
-                            .panelBackground(colorScheme)
-                            .cornerRadius(DesignTokens.BorderRadius.card)
-                            .shadow(
-                                color: DesignTokens.Colors.primary.opacity(0.1),
-                                radius: 12,
-                                x: 0,
-                                y: 4
-                            )
+            .padding(DesignTokens.Spacing.base)
+            .panelBackgroundWithBorder(colorScheme)
+            .cornerRadius(DesignTokens.BorderRadius.card)
+            .shadow(
+                color: DesignTokens.Colors.primary.opacity(0.1),
+                radius: 12,
+                x: 0,
+                y: 4
+            )
                         }
                         .padding(.horizontal, DesignTokens.Spacing.screenPadding)
                         
@@ -189,7 +189,7 @@ struct ReminderCard: View {
         }
         .frame(width: 160)
         .padding(DesignTokens.Spacing.base)
-        .panelBackground(colorScheme)
+        .panelBackgroundWithBorder(colorScheme)
         .cornerRadius(DesignTokens.BorderRadius.card)
         .shadow(
             color: DesignTokens.Colors.primary.opacity(0.12),
@@ -251,7 +251,7 @@ struct QuickActionButtonContent: View {
                 .foregroundStyle(DesignTokens.Colors.adaptiveTextTertiary(colorScheme))
         }
         .padding(DesignTokens.Spacing.base)
-        .panelBackground(colorScheme)
+        .panelBackgroundWithBorder(colorScheme)
         .cornerRadius(DesignTokens.BorderRadius.card)
         .shadow(
             color: DesignTokens.Colors.primary.opacity(0.08),

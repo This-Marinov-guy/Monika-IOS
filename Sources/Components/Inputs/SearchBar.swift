@@ -34,6 +34,10 @@ struct SearchBar: View {
         .padding(.vertical, DesignTokens.Spacing.sm)
         .background(Color.adaptiveSecondaryBackground)
         .cornerRadius(DesignTokens.BorderRadius.md)
+        .overlay(
+            RoundedRectangle(cornerRadius: DesignTokens.BorderRadius.md)
+                .stroke(DesignTokens.Colors.borderMedium, lineWidth: DesignTokens.BorderWidth.regular)
+        )
     }
 }
 

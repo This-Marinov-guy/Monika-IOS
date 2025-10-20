@@ -24,7 +24,7 @@ struct PlannerCard<Content: View>: View {
     var body: some View {
         content
             .padding(padding)
-            .panelBackground(colorScheme)
+            .panelBackgroundWithBorder(colorScheme)
             .cornerRadius(DesignTokens.BorderRadius.card)
             .shadow(
                 color: DesignTokens.Colors.primary.opacity(shadowOpacity),

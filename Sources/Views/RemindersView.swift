@@ -116,7 +116,7 @@ public struct RemindersView: View {
             }
             .navigationTitle("Reminders")
             .toolbar {
-                ToolbarItem(placement: .navigationBarTrailing) {
+                ToolbarItem(placement: .automatic) {
                     Button {
                         showingSuggestions = true
                     } label: {
@@ -189,7 +189,7 @@ struct ReminderPersonGroup: View {
                         .foregroundStyle(DesignTokens.Colors.adaptiveTextTertiary(colorScheme))
                 }
                 .padding(DesignTokens.Spacing.base)
-                .panelBackground(colorScheme)
+                .panelBackgroundWithBorder(colorScheme)
                 .cornerRadius(DesignTokens.BorderRadius.card)
                 .shadow(
                     color: DesignTokens.Colors.primary.opacity(0.08),

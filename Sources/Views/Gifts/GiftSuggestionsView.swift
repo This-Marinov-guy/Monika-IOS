@@ -209,6 +209,15 @@ struct SuggestionCard: View {
                 : DesignTokens.Colors.white
         )
         .cornerRadius(DesignTokens.BorderRadius.card)
+        .overlay(
+            RoundedRectangle(cornerRadius: DesignTokens.BorderRadius.card)
+                .stroke(
+                    colorScheme == .dark
+                        ? DesignTokens.Colors.borderDark
+                        : DesignTokens.Colors.borderLight,
+                    lineWidth: DesignTokens.BorderWidth.regular
+                )
+        )
         .shadow(
             color: DesignTokens.Colors.primary.opacity(0.08),
             radius: 12,

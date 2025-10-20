@@ -107,7 +107,7 @@ struct EventRow: View {
                     .foregroundStyle(DesignTokens.Colors.adaptiveTextTertiary(colorScheme))
             }
             .padding(DesignTokens.Spacing.base)
-            .panelBackgroundGreen(colorScheme)
+            .panelBackgroundGreenWithBorder(colorScheme)
             .cornerRadius(DesignTokens.BorderRadius.card)
             .shadow(
                 color: DesignTokens.Colors.green.opacity(0.12),

@@ -84,7 +84,7 @@ public struct ProfileView: View {
                         ZStack {
                             Rectangle()
                                 .fill(.clear)
-                                .panelBackground(colorScheme)
+                                .panelBackgroundWithBorder(colorScheme)
                         }
                     )
                 }
@@ -114,9 +114,21 @@ public struct ProfileView: View {
                         .fontWeight(.semibold)
                 }
                 .listRowBackground(
-                    colorScheme == .dark 
-                        ? DesignTokens.Colors.surfaceDark
-                        : DesignTokens.Colors.white
+                    ZStack {
+                        RoundedRectangle(cornerRadius: DesignTokens.BorderRadius.md)
+                            .fill(colorScheme == .dark 
+                                ? DesignTokens.Colors.surfaceDark
+                                : DesignTokens.Colors.white)
+                            .overlay(
+                                RoundedRectangle(cornerRadius: DesignTokens.BorderRadius.md)
+                                    .stroke(
+                                        colorScheme == .dark
+                                            ? DesignTokens.Colors.borderDark
+                                            : DesignTokens.Colors.borderLight,
+                                        lineWidth: DesignTokens.BorderWidth.regular
+                                    )
+                            )
+                    }
                 )
                 
                 // About section
@@ -147,9 +159,21 @@ public struct ProfileView: View {
                         .fontWeight(.semibold)
                 }
                 .listRowBackground(
-                    colorScheme == .dark 
-                        ? DesignTokens.Colors.surfaceDark
-                        : DesignTokens.Colors.white
+                    ZStack {
+                        RoundedRectangle(cornerRadius: DesignTokens.BorderRadius.md)
+                            .fill(colorScheme == .dark 
+                                ? DesignTokens.Colors.surfaceDark
+                                : DesignTokens.Colors.white)
+                            .overlay(
+                                RoundedRectangle(cornerRadius: DesignTokens.BorderRadius.md)
+                                    .stroke(
+                                        colorScheme == .dark
+                                            ? DesignTokens.Colors.borderDark
+                                            : DesignTokens.Colors.borderLight,
+                                        lineWidth: DesignTokens.BorderWidth.regular
+                                    )
+                            )
+                    }
                 )
                 
                 // Actions section
@@ -171,9 +195,21 @@ public struct ProfileView: View {
                     }
                 }
                 .listRowBackground(
-                    colorScheme == .dark 
-                        ? DesignTokens.Colors.surfaceDark
-                        : DesignTokens.Colors.white
+                    ZStack {
+                        RoundedRectangle(cornerRadius: DesignTokens.BorderRadius.md)
+                            .fill(colorScheme == .dark 
+                                ? DesignTokens.Colors.surfaceDark
+                                : DesignTokens.Colors.white)
+                            .overlay(
+                                RoundedRectangle(cornerRadius: DesignTokens.BorderRadius.md)
+                                    .stroke(
+                                        colorScheme == .dark
+                                            ? DesignTokens.Colors.borderDark
+                                            : DesignTokens.Colors.borderLight,
+                                        lineWidth: DesignTokens.BorderWidth.regular
+                                    )
+                            )
+                    }
                 )
             }
             .scrollContentBackground(.hidden)
