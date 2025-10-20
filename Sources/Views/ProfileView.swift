@@ -55,9 +55,9 @@ public struct ProfileView: View {
                     .frame(maxWidth: .infinity)
                     .padding(.vertical, DesignTokens.Spacing.large)
                     .listRowBackground(
-                        colorScheme == .dark 
-                            ? DesignTokens.Gradients.dark.opacity(0.3)
-                            : DesignTokens.Gradients.subtle.opacity(0.5)
+                        ZStack {
+                            DesignTokens.Gradients.subtle.opacity(colorScheme == .dark ? 0.3 : 0.5)
+                        }
                     )
                 }
             
@@ -81,9 +81,11 @@ public struct ProfileView: View {
                             .fontWeight(.semibold)
                     }
                     .listRowBackground(
-                        colorScheme == .dark 
-                            ? DesignTokens.Colors.surfaceDark
-                            : DesignTokens.Colors.white
+                        ZStack {
+                            Rectangle()
+                                .fill(.clear)
+                                .panelBackground(colorScheme)
+                        }
                     )
                 }
                 

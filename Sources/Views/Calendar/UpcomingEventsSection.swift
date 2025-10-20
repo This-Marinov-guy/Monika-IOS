@@ -6,7 +6,7 @@ struct UpcomingEventsSection: View {
     var body: some View {
         VStack(alignment: .leading, spacing: DesignTokens.Spacing.medium) {
             HStack {
-                Text("Upcoming Events")
+                Text(MonikaStrings.Calendar.upcomingEvents)
                     .font(DesignTokens.Typography.headline)
                     .foregroundStyle(DesignTokens.Colors.adaptiveTextPrimary(colorScheme))
                 
@@ -67,7 +67,7 @@ struct EventRow: View {
     }
     
     var body: some View {
-        PlannerCard {
+        VStack(spacing: 0) {
             HStack(spacing: DesignTokens.Spacing.medium) {
                 // Date indicator
                 VStack(spacing: 2) {
@@ -106,6 +106,15 @@ struct EventRow: View {
                     .font(.caption)
                     .foregroundStyle(DesignTokens.Colors.adaptiveTextTertiary(colorScheme))
             }
+            .padding(DesignTokens.Spacing.base)
+            .panelBackgroundGreen(colorScheme)
+            .cornerRadius(DesignTokens.BorderRadius.card)
+            .shadow(
+                color: DesignTokens.Colors.green.opacity(0.12),
+                radius: 12,
+                x: 0,
+                y: 4
+            )
         }
     }
 }

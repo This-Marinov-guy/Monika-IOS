@@ -9,24 +9,28 @@ public struct MainTabView: View {
     
     public var body: some View {
         TabView(selection: $selectedTab) {
+            // Home Dashboard
+            HomeDashboardView()
+                .tabItem {
+                    Label("Home", systemImage: "house.fill")
+                }
+                .tag(0)
+            
+            // Gift Reminders (Primary Flow)
+            RemindersView()
+                .tabItem {
+                    Label("Reminders", systemImage: "gift.fill")
+                }
+                .tag(1)
+            
+            // Calendar
             CalendarTabView()
                 .tabItem {
                     Label("Calendar", systemImage: "calendar")
                 }
-                .tag(0)
-            
-            PeopleListView()
-                .tabItem {
-                    Label("People", systemImage: "person.2.fill")
-                }
-                .tag(1)
-            
-            GiftsListView()
-                .tabItem {
-                    Label("Gifts", systemImage: "gift.fill")
-                }
                 .tag(2)
             
+            // Profile
             ProfileView()
                 .tabItem {
                     Label("Profile", systemImage: "person.circle.fill")
@@ -51,4 +55,3 @@ public struct MainTabView: View {
         .environmentObject(AuthService())
         .environmentObject(ThemeManager())
 }
-

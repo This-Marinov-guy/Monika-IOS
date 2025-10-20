@@ -87,7 +87,7 @@ public struct GiftsListView: View {
                             .foregroundStyle(DesignTokens.Colors.primary)
                     }
                 }
-                ToolbarItem(placement: .navigationBarTrailing) {
+                ToolbarItem(placement: .automatic) {
                     NavigationLink {
                         GiftSuggestionsView()
                     } label: {

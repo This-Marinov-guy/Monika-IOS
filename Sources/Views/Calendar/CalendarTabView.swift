@@ -62,7 +62,7 @@ public struct CalendarTabView: View {
                     }
                 }
             }
-            .navigationTitle("Calendar")
+            .navigationTitle(MonikaStrings.Calendar.title)
             .toolbar {
                 ToolbarItem(placement: .primaryAction) {
                     Button {
@@ -70,7 +70,7 @@ public struct CalendarTabView: View {
                     } label: {
                         Image(systemName: "plus.circle.fill")
                             .font(.title2)
-                            .foregroundStyle(DesignTokens.Colors.primary)
+                            .foregroundStyle(DesignTokens.Colors.green)
                     }
                 }
                 
@@ -80,6 +80,7 @@ public struct CalendarTabView: View {
                     } label: {
                         Text("Today")
                             .fontWeight(.medium)
+                            .foregroundStyle(DesignTokens.Colors.green)
                     }
                 }
             }
